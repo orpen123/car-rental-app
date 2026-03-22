@@ -1,6 +1,6 @@
 import userRoutes from './src/routes/userRoutes.js';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: '.env' });
 import express from 'express';
 import cors from 'cors';
 import connectDB from './src/config/db.js';
@@ -20,6 +20,9 @@ app.use(cors({
   origin: '*',
   credentials: false,
 }));
+// Log to verify env vars are loaded
+console.log('MONGO_URI:', process.env.MONGO_URI ? '✅ loaded' : '❌ missing');
+console.log('PORT:', process.env.PORT);
 
 // Routes
 app.get('/', (req, res) => {
