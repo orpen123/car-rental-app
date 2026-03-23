@@ -12,7 +12,7 @@ const Booking = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [dateError, setDateError] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [formData, setFormData] = useState({
@@ -54,93 +54,51 @@ const Booking = () => {
     return date.toISOString().split('T')[0];
   };
 
-
   const handleSubmit = async () => {
-  if (!startDate || !endDate) {
-    return setError('Please select start and end dates');
-  }
-  if (totalDays <= 0) {
-    return setError('End date must be after start date');
-  }
-  if (!formData.pickupLocation) {
-    return setError('Please enter a pickup location');
-  }
+    if (!startDate || !endDate) {
+      return setDateError('Please select start and end dates');
+    }
+    if (totalDays <= 0) {
+      return setDateError('End date must be after start date');
+    }
+    if (!formData.pickupLocation) {
+      return setError('Please enter a pickup location');
+    }
 
-  setSubmitting(true);
-  try {
-    // Create booking first
-    const bookingRes = await api.post('/bookings', {
-      carId: id,
-      startDate: formatDate(startDate),
-      endDate: formatDate(endDate),
-      ...formData,
-    });
+    setSubmitting(true);
+    setDateError('');
+    setError('');
+    try {
+      const bookingRes = await api.post('/bookings', {
+        carId: id,
+        startDate: formatDate(startDate),
+        endDate: formatDate(endDate),
+        ...formData,
+      });
 
-    const bookingId = bookingRes.data._id;
+      const bookingId = bookingRes.data._id;
 
-    // Create Stripe checkout session
-    const stripeRes = await api.post('/payment/create-checkout-session', {
-      bookingId,
-    });
+      const stripeRes = await api.post('/payment/create-checkout-session', {
+        bookingId,
+      });
 
-    // Redirect to Stripe
-    window.location.href = stripeRes.data.url;
-
-  } catch (err) {
-    setError(err.response?.data?.message || 'Booking failed');
-    setSubmitting(false);
-  }
-};
-
-  // const handleSubmit = async () => {
-  //   if (!startDate || !endDate) {
-  //     return setError('Please select start and end dates');
-  //   }
-  //   if (totalDays <= 0) {
-  //     return setError('End date must be after start date');
-  //   }
-  //   if (!formData.pickupLocation) {
-  //     return setError('Please enter a pickup location');
-  //   }
-
-  //   setSubmitting(true);
-  //   try {
-  //     await api.post('/bookings', {
-  //       carId: id,
-  //       startDate: formatDate(startDate),
-  //       endDate: formatDate(endDate),
-  //       ...formData,
-  //     });
-  //     setSuccess(true);
-  //     setTimeout(() => navigate('/profile'), 2000);
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || 'Booking failed');
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
+      window.location.href = stripeRes.data.url;
+    } catch (err) {
+      const message = err.response?.data?.message || 'Booking failed';
+      // If it's a date/availability error show under dates
+      if (message.includes('already booked') || message.includes('dates') || message.includes('available')) {
+        setDateError(message);
+      } else {
+        setError(message);
+      }
+      setSubmitting(false);
+    }
+  };
 
   if (loading) {
     return (
       <div className='min-h-screen bg-[#eaecf5] flex items-center justify-center'>
         <div className='w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin' />
-      </div>
-    );
-  }
-
-  if (success) {
-    return (
-      <div className='min-h-screen bg-[#eaecf5] flex items-center justify-center px-4'>
-        <div className='bg-white rounded-3xl shadow-sm p-10 text-center max-w-sm w-full'>
-          <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-            <svg className='w-8 h-8 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
-            </svg>
-          </div>
-          <h2 className='text-xl font-bold text-gray-900 mb-2'>Booking Confirmed!</h2>
-          <p className='text-gray-400 text-sm mb-1'>Your booking has been placed successfully.</p>
-          <p className='text-gray-300 text-xs'>Redirecting to your profile...</p>
-        </div>
       </div>
     );
   }
@@ -168,17 +126,14 @@ const Booking = () => {
               </h3>
 
               <div className='flex flex-col gap-4'>
-                {/* Start Date */}
                 <div>
-                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>
-                    Start Date
-                  </label>
+                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>Start Date</label>
                   <DatePicker
                     selected={startDate}
                     onChange={(date) => {
                       setStartDate(date);
                       if (endDate && date >= endDate) setEndDate(null);
-                      setError('');
+                      setDateError('');
                     }}
                     minDate={new Date()}
                     placeholderText='Select start date'
@@ -188,16 +143,13 @@ const Booking = () => {
                   />
                 </div>
 
-                {/* End Date */}
                 <div>
-                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>
-                    End Date
-                  </label>
+                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>End Date</label>
                   <DatePicker
                     selected={endDate}
                     onChange={(date) => {
                       setEndDate(date);
-                      setError('');
+                      setDateError('');
                     }}
                     minDate={startDate || new Date()}
                     placeholderText='Select end date'
@@ -207,6 +159,16 @@ const Booking = () => {
                   />
                 </div>
               </div>
+
+              {/* ✅ Date error shows here — right under dates */}
+              {dateError && (
+                <div className='mt-3 bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 flex items-center gap-2'>
+                  <svg className='w-4 h-4 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' />
+                  </svg>
+                  {dateError}
+                </div>
+              )}
 
               {/* Days indicator */}
               {totalDays > 0 && (
@@ -225,9 +187,7 @@ const Booking = () => {
               </h3>
               <div className='space-y-4'>
                 <div>
-                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>
-                    Pickup Location
-                  </label>
+                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>Pickup Location</label>
                   <input
                     type='text'
                     name='pickupLocation'
@@ -238,9 +198,7 @@ const Booking = () => {
                   />
                 </div>
                 <div>
-                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>
-                    Dropoff Location
-                  </label>
+                  <label className='block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>Dropoff Location</label>
                   <input
                     type='text'
                     name='dropoffLocation'
@@ -269,7 +227,7 @@ const Booking = () => {
               />
             </div>
 
-            {/* Error */}
+            {/* General error */}
             {error && (
               <div className='bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 text-center'>
                 {error}
@@ -285,11 +243,7 @@ const Booking = () => {
               <div className='bg-white rounded-2xl shadow-sm overflow-hidden'>
                 <div className='w-full aspect-video bg-[#eaecf5]'>
                   {car.images && car.images[0] ? (
-                    <img
-                      src={car.images[0]}
-                      alt={`${car.brand} ${car.model}`}
-                      className='w-full h-full object-cover'
-                    />
+                    <img src={car.images[0]} alt={`${car.brand} ${car.model}`} className='w-full h-full object-cover' />
                   ) : (
                     <div className='w-full h-full flex items-center justify-center'>
                       <svg className='w-12 h-12 text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
