@@ -12,9 +12,7 @@ const ManageBookings = () => {
   const [filterStatus, setFilterStatus] = useState('');
   const [updatingId, setUpdatingId] = useState(null);
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
+  useEffect(() => { fetchBookings(); }, []);
 
   const fetchBookings = async () => {
     try {
@@ -96,14 +94,10 @@ const ManageBookings = () => {
       cursor: 'pointer',
       borderRadius: '12px',
       transition: 'all 0.2s ease',
-      width: type === 'status' ? '155px' : '135px',
+      width: type === 'status' ? '150px' : '130px',
       '&:hover': { borderColor: '#3b82f6', background: 'white' },
     }),
-    valueContainer: (base) => ({
-      ...base,
-      padding: '0 10px',
-      height: '34px',
-    }),
+    valueContainer: (base) => ({ ...base, padding: '0 10px', height: '34px' }),
     singleValue: (base, { data }) => ({
       ...base,
       fontSize: '12px',
@@ -136,11 +130,7 @@ const ManageBookings = () => {
       padding: '8px 10px',
       cursor: 'pointer',
       fontWeight: state.isSelected ? '600' : '400',
-      backgroundColor: state.isSelected
-        ? '#3b82f6'
-        : state.isFocused
-        ? '#eff6ff'
-        : 'white',
+      backgroundColor: state.isSelected ? '#3b82f6' : state.isFocused ? '#eff6ff' : 'white',
       color: state.isSelected ? 'white' : '#374151',
       transition: 'all 0.1s ease',
     }),
@@ -152,11 +142,11 @@ const ManageBookings = () => {
     : bookings;
 
   const stats = [
-    { label: 'Total', value: bookings.length, color: 'text-gray-900' },
-    { label: 'Pending', value: bookings.filter(b => b.status === 'pending').length, color: 'text-yellow-600' },
-    { label: 'Confirmed', value: bookings.filter(b => b.status === 'confirmed').length, color: 'text-green-600' },
-    { label: 'Cancelled', value: bookings.filter(b => b.status === 'cancelled').length, color: 'text-red-500' },
-    { label: 'Completed', value: bookings.filter(b => b.status === 'completed').length, color: 'text-blue-600' },
+    { label: 'Total', value: bookings.length, color: 'text-gray-900', bg: 'bg-gray-50' },
+    { label: 'Pending', value: bookings.filter(b => b.status === 'pending').length, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    { label: 'Confirmed', value: bookings.filter(b => b.status === 'confirmed').length, color: 'text-green-600', bg: 'bg-green-50' },
+    { label: 'Cancelled', value: bookings.filter(b => b.status === 'cancelled').length, color: 'text-red-500', bg: 'bg-red-50' },
+    { label: 'Completed', value: bookings.filter(b => b.status === 'completed').length, color: 'text-blue-600', bg: 'bg-blue-50' },
   ];
 
   return (
@@ -174,14 +164,14 @@ const ManageBookings = () => {
             </Link>
             <h1 className='text-2xl sm:text-3xl font-bold text-gray-900'>Manage Bookings</h1>
           </div>
-          <span className='text-xs text-gray-400 bg-white px-3 py-1.5 rounded-xl shadow-sm w-fit'>
+          <span className='text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full font-semibold w-fit'>
             {filteredBookings.length} bookings
           </span>
         </div>
 
-        {/* Success / Error */}
+        {/* Alerts */}
         {success && (
-          <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 text-center flex items-center justify-center gap-2'>
+          <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 flex items-center justify-center gap-2'>
             <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
               <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
             </svg>
@@ -195,19 +185,19 @@ const ManageBookings = () => {
         )}
 
         {/* Stats */}
-        <div className='grid grid-cols-3 sm:grid-cols-5 gap-3 mb-6'>
+        <div className='grid grid-cols-3 sm:grid-cols-5 gap-3 mb-5'>
           {stats.map((stat, i) => (
             <button
               key={i}
               onClick={() => setFilterStatus(stat.label === 'Total' ? '' : stat.label.toLowerCase())}
-              className={`bg-white rounded-2xl shadow-sm p-3 text-center transition-all hover:shadow-md ${
+              className={`bg-white rounded-2xl shadow-sm p-3 sm:p-4 text-center transition-all hover:shadow-md active:scale-95 ${
                 filterStatus === stat.label.toLowerCase() || (stat.label === 'Total' && filterStatus === '')
-                  ? 'ring-2 ring-blue-500'
+                  ? 'ring-2 ring-blue-500 shadow-md'
                   : ''
               }`}
             >
               <p className={`text-xl sm:text-2xl font-black mb-0.5 ${stat.color}`}>{stat.value}</p>
-              <p className='text-xs text-gray-400'>{stat.label}</p>
+              <p className='text-xs text-gray-400 font-medium'>{stat.label}</p>
             </button>
           ))}
         </div>
@@ -221,7 +211,7 @@ const ManageBookings = () => {
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                 filterStatus === status
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-white text-gray-500 hover:bg-gray-50'
+                  : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-100'
               }`}
             >
               {status === '' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
@@ -231,10 +221,13 @@ const ManageBookings = () => {
 
         {/* Bookings List */}
         <div className='bg-white rounded-2xl shadow-sm overflow-hidden'>
-          <div className='px-5 py-4 border-b border-gray-50'>
+          <div className='px-5 py-4 border-b border-gray-50 flex items-center justify-between'>
             <h2 className='text-sm font-bold text-gray-900'>
               {filterStatus ? `${filterStatus.charAt(0).toUpperCase() + filterStatus.slice(1)} Bookings` : 'All Bookings'}
             </h2>
+            {filteredBookings.length > 0 && (
+              <span className='text-xs text-gray-400'>{filteredBookings.length} results</span>
+            )}
           </div>
 
           {loading ? (
@@ -244,19 +237,21 @@ const ManageBookings = () => {
           ) : filteredBookings.length === 0 ? (
             <div className='text-center py-16'>
               <p className='text-3xl mb-2'>📋</p>
-              <p className='text-gray-400 text-sm'>No bookings found</p>
+              <p className='text-gray-400 text-sm font-medium'>No bookings found</p>
             </div>
           ) : (
             <div className='divide-y divide-gray-50'>
-              {filteredBookings.map((booking) => (
+              {filteredBookings.map((booking, idx) => (
                 <div
                   key={booking._id}
                   className='p-4 sm:p-5 hover:bg-gray-50 transition-colors'
+                  style={{ animation: `fadeSlideUp 0.4s ease-out ${idx * 0.05}s both` }}
                 >
-                  <div className='flex flex-col sm:flex-row gap-4'>
+                  <div className='flex gap-3 sm:gap-4'>
 
-                    {/* Car Image */}
-<div className='w-full sm:w-24 h-32 sm:h-16 rounded-xl bg-[#eaecf5] overflow-hidden flex-shrink-0'>                      {booking.car?.images?.[0] ? (
+                    {/* Car Image — small fixed size on all screens */}
+                    <div className='w-16 h-16 sm:w-24 sm:h-16 rounded-2xl bg-[#eaecf5] overflow-hidden flex-shrink-0'>
+                      {booking.car?.images?.[0] ? (
                         <img src={booking.car.images[0]} alt='' className='w-full h-full object-cover' />
                       ) : (
                         <div className='w-full h-full flex items-center justify-center text-gray-300 text-lg'>🚗</div>
@@ -265,13 +260,16 @@ const ManageBookings = () => {
 
                     {/* Info */}
                     <div className='flex-1 min-w-0'>
-                      <div className='flex items-start justify-between gap-2 mb-2'>
-                        <div>
-                          <p className='text-sm font-bold text-gray-900'>
+
+                      {/* Top row */}
+                      <div className='flex items-start justify-between gap-2 mb-1.5'>
+                        <div className='min-w-0'>
+                          <p className='text-sm font-bold text-gray-900 truncate'>
                             {booking.car?.brand} {booking.car?.model}
                           </p>
-                          <p className='text-xs text-gray-400 mt-0.5'>
-                            👤 {booking.user?.name} • {booking.user?.email}
+                          <p className='text-xs text-gray-400 truncate'>
+                            👤 {booking.user?.name}
+                            <span className='hidden sm:inline'> • {booking.user?.email}</span>
                           </p>
                         </div>
                         <div className='flex flex-col items-end gap-1 flex-shrink-0'>
@@ -285,17 +283,15 @@ const ManageBookings = () => {
                       </div>
 
                       {/* Dates + Price */}
-                      <div className='flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-3'>
+                      <div className='flex flex-wrap items-center gap-2 text-xs text-gray-400 mb-3'>
                         <span>📅 {new Date(booking.startDate).toLocaleDateString()} → {new Date(booking.endDate).toLocaleDateString()}</span>
-                        <span>🗓️ {booking.totalDays} days</span>
-                        {booking.pickupLocation && <span>📍 {booking.pickupLocation}</span>}
-                        <span className='font-bold text-blue-600 text-sm'>${booking.totalPrice}</span>
+                        <span className='hidden sm:block'>🗓️ {booking.totalDays} days</span>
+                        {booking.pickupLocation && <span className='hidden sm:block'>📍 {booking.pickupLocation}</span>}
+                        <span className='font-bold text-blue-600 text-sm ml-auto sm:ml-0'>${booking.totalPrice}</span>
                       </div>
 
                       {/* Actions */}
                       <div className='flex flex-wrap items-center gap-2'>
-
-                        {/* Status Select */}
                         <Select
                           value={statusOptions.find(o => o.value === booking.status)}
                           onChange={(opt) => handleStatusUpdate(booking._id, opt.value, booking.paymentStatus)}
@@ -304,8 +300,6 @@ const ManageBookings = () => {
                           isDisabled={updatingId === booking._id}
                           isSearchable={false}
                         />
-
-                        {/* Payment Select */}
                         <Select
                           value={paymentOptions.find(o => o.value === booking.paymentStatus)}
                           onChange={(opt) => handleStatusUpdate(booking._id, booking.status, opt.value)}
@@ -314,13 +308,9 @@ const ManageBookings = () => {
                           isDisabled={updatingId === booking._id}
                           isSearchable={false}
                         />
-
-                        {/* Loading spinner */}
                         {updatingId === booking._id && (
                           <div className='w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin' />
                         )}
-
-                        {/* Delete */}
                         <button
                           onClick={() => setDeleteConfirm(booking._id)}
                           className='ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-semibold rounded-xl transition-colors'
@@ -328,7 +318,7 @@ const ManageBookings = () => {
                           <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16' />
                           </svg>
-                          Delete
+                          <span className='hidden sm:block'>Delete</span>
                         </button>
                       </div>
                     </div>
@@ -339,7 +329,7 @@ const ManageBookings = () => {
           )}
         </div>
 
-        {/* Delete Confirm Modal */}
+        {/* Delete Modal */}
         {deleteConfirm && (
           <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 px-4'>
             <div className='bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full' style={{ animation: 'scaleIn 0.2s ease-out forwards' }}>
@@ -349,9 +339,7 @@ const ManageBookings = () => {
                 </svg>
               </div>
               <h3 className='text-sm font-bold text-gray-900 text-center mb-1'>Delete Booking</h3>
-              <p className='text-xs text-gray-400 text-center mb-5'>
-                Are you sure? This action cannot be undone.
-              </p>
+              <p className='text-xs text-gray-400 text-center mb-5'>Are you sure? This cannot be undone.</p>
               <div className='flex gap-3'>
                 <button
                   onClick={() => handleDelete(deleteConfirm)}
