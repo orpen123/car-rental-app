@@ -3,6 +3,7 @@ import Booking from '../models/Booking.js';
 
 
 
+
 export const getCarBookedDates = async (req, res) => {
   try {
     const bookings = await Booking.find({
@@ -10,7 +11,6 @@ export const getCarBookedDates = async (req, res) => {
       status: { $nin: ['cancelled'] },
     }).select('startDate endDate');
 
-    // Generate all booked date ranges
     const bookedRanges = bookings.map(b => ({
       start: new Date(b.startDate),
       end: new Date(b.endDate),
