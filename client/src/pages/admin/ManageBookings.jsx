@@ -256,8 +256,7 @@ const ManageBookings = () => {
                   <div className='flex flex-col sm:flex-row gap-4'>
 
                     {/* Car Image */}
-                    <div className='w-full sm:w-24 h-16 rounded-xl bg-[#eaecf5] overflow-hidden flex-shrink-0'>
-                      {booking.car?.images?.[0] ? (
+<div className='w-full sm:w-24 h-32 sm:h-16 rounded-xl bg-[#eaecf5] overflow-hidden flex-shrink-0'>                      {booking.car?.images?.[0] ? (
                         <img src={booking.car.images[0]} alt='' className='w-full h-full object-cover' />
                       ) : (
                         <div className='w-full h-full flex items-center justify-center text-gray-300 text-lg'>🚗</div>
