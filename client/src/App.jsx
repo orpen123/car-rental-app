@@ -14,6 +14,9 @@ import ManageBookings from './pages/admin/ManageBookings.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
 import NotFound from './pages/NotFound.jsx';
+import BookingSuccess from './pages/BookingSuccess.jsx';
+
+// Add inside Routes
 
 // Protected Route — must be logged in
 const ProtectedRoute = ({ children }) => {
@@ -44,6 +47,8 @@ function App() {
           <Route path='/cars' element={<Cars />} />
           <Route path='/cars/:id' element={<CarDetail />} />
           <Route path='*' element={<NotFound />} />
+          <Route path='/booking-success' element={<ProtectedRoute><BookingSuccess /></ProtectedRoute>} />
+
 
           {/* Public — redirect if already logged in */}
           <Route

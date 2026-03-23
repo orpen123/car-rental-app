@@ -8,8 +8,23 @@ import authRoutes from './src/routes/authRoutes.js';
 import carRoutes from './src/routes/carRoutes.js';
 import bookingRoutes from './src/routes/bookingRoutes.js';
 import uploadRoutes from './src/routes/uploadRoutes.js';
+import paymentRoutes from './src/routes/paymentRoutes.js';
+
+
+
+
+
+
+
+
+
+
 
 const app = express();
+
+// existing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Middlewares
 app.use(express.json());
@@ -34,6 +49,10 @@ app.use('/api/cars', carRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/users', userRoutes);
+// ⚠️ Webhook needs raw body — add BEFORE express.json()
+app.use('/api/payment/webhook', express.raw({ type: 'application/json' }));
+// existing routes
+app.use('/api/payment', paymentRoutes);
 
 
 // Global error handler

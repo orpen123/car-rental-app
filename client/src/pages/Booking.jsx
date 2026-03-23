@@ -54,33 +54,71 @@ const Booking = () => {
     return date.toISOString().split('T')[0];
   };
 
-  const handleSubmit = async () => {
-    if (!startDate || !endDate) {
-      return setError('Please select start and end dates');
-    }
-    if (totalDays <= 0) {
-      return setError('End date must be after start date');
-    }
-    if (!formData.pickupLocation) {
-      return setError('Please enter a pickup location');
-    }
 
-    setSubmitting(true);
-    try {
-      await api.post('/bookings', {
-        carId: id,
-        startDate: formatDate(startDate),
-        endDate: formatDate(endDate),
-        ...formData,
-      });
-      setSuccess(true);
-      setTimeout(() => navigate('/profile'), 2000);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Booking failed');
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const handleSubmit = async () => {
+  if (!startDate || !endDate) {
+    return setError('Please select start and end dates');
+  }
+  if (totalDays <= 0) {
+    return setError('End date must be after start date');
+  }
+  if (!formData.pickupLocation) {
+    return setError('Please enter a pickup location');
+  }
+
+  setSubmitting(true);
+  try {
+    // Create booking first
+    const bookingRes = await api.post('/bookings', {
+      carId: id,
+      startDate: formatDate(startDate),
+      endDate: formatDate(endDate),
+      ...formData,
+    });
+
+    const bookingId = bookingRes.data._id;
+
+    // Create Stripe checkout session
+    const stripeRes = await api.post('/payment/create-checkout-session', {
+      bookingId,
+    });
+
+    // Redirect to Stripe
+    window.location.href = stripeRes.data.url;
+
+  } catch (err) {
+    setError(err.response?.data?.message || 'Booking failed');
+    setSubmitting(false);
+  }
+};
+
+  // const handleSubmit = async () => {
+  //   if (!startDate || !endDate) {
+  //     return setError('Please select start and end dates');
+  //   }
+  //   if (totalDays <= 0) {
+  //     return setError('End date must be after start date');
+  //   }
+  //   if (!formData.pickupLocation) {
+  //     return setError('Please enter a pickup location');
+  //   }
+
+  //   setSubmitting(true);
+  //   try {
+  //     await api.post('/bookings', {
+  //       carId: id,
+  //       startDate: formatDate(startDate),
+  //       endDate: formatDate(endDate),
+  //       ...formData,
+  //     });
+  //     setSuccess(true);
+  //     setTimeout(() => navigate('/profile'), 2000);
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || 'Booking failed');
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
 
   if (loading) {
     return (
