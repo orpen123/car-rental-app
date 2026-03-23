@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Select from 'react-select';
 import api from '../../services/api.js';
 
 const ManageBookings = () => {
@@ -30,7 +31,7 @@ const ManageBookings = () => {
     setUpdatingId(id);
     try {
       await api.put(`/bookings/${id}`, { status, paymentStatus });
-      setSuccess('Booking updated successfully!');
+      setSuccess('Booking updated!');
       fetchBookings();
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
@@ -43,7 +44,7 @@ const ManageBookings = () => {
   const handleDelete = async (id) => {
     try {
       await api.delete(`/bookings/${id}`);
-      setSuccess('Booking deleted successfully!');
+      setSuccess('Booking deleted!');
       fetchBookings();
       setDeleteConfirm(null);
       setTimeout(() => setSuccess(''), 3000);
@@ -71,6 +72,81 @@ const ManageBookings = () => {
     }
   };
 
+  const statusOptions = [
+    { value: 'pending', label: '🕐 Pending', color: '#d97706' },
+    { value: 'confirmed', label: '✅ Confirmed', color: '#16a34a' },
+    { value: 'completed', label: '🏁 Completed', color: '#2563eb' },
+    { value: 'cancelled', label: '❌ Cancelled', color: '#ef4444' },
+  ];
+
+  const paymentOptions = [
+    { value: 'unpaid', label: '💳 Unpaid', color: '#f97316' },
+    { value: 'paid', label: '✅ Paid', color: '#16a34a' },
+    { value: 'refunded', label: '↩️ Refunded', color: '#9333ea' },
+  ];
+
+  const makeSelectStyles = (type) => ({
+    control: (base, state) => ({
+      ...base,
+      border: `1.5px solid ${state.isFocused ? '#3b82f6' : '#f3f4f6'}`,
+      boxShadow: state.isFocused ? '0 0 0 3px rgba(59,130,246,0.1)' : 'none',
+      background: '#f9fafb',
+      minHeight: '34px',
+      height: '34px',
+      cursor: 'pointer',
+      borderRadius: '12px',
+      transition: 'all 0.2s ease',
+      width: type === 'status' ? '155px' : '135px',
+      '&:hover': { borderColor: '#3b82f6', background: 'white' },
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0 10px',
+      height: '34px',
+    }),
+    singleValue: (base, { data }) => ({
+      ...base,
+      fontSize: '12px',
+      fontWeight: '600',
+      color: data.color || '#374151',
+    }),
+    indicatorSeparator: () => ({ display: 'none' }),
+    dropdownIndicator: (base, state) => ({
+      ...base,
+      color: state.isFocused ? '#3b82f6' : '#9ca3af',
+      padding: '0 6px',
+      transition: 'all 0.2s ease',
+      transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: '14px',
+      boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
+      border: '1px solid #f1f5f9',
+      overflow: 'hidden',
+      marginTop: '4px',
+      zIndex: 999,
+      animation: 'selectSlideDown 0.15s ease-out forwards',
+    }),
+    menuList: (base) => ({ ...base, padding: '4px' }),
+    option: (base, state) => ({
+      ...base,
+      borderRadius: '10px',
+      fontSize: '12px',
+      padding: '8px 10px',
+      cursor: 'pointer',
+      fontWeight: state.isSelected ? '600' : '400',
+      backgroundColor: state.isSelected
+        ? '#3b82f6'
+        : state.isFocused
+        ? '#eff6ff'
+        : 'white',
+      color: state.isSelected ? 'white' : '#374151',
+      transition: 'all 0.1s ease',
+    }),
+    placeholder: (base) => ({ ...base, fontSize: '12px', color: '#9ca3af' }),
+  });
+
   const filteredBookings = filterStatus
     ? bookings.filter(b => b.status === filterStatus)
     : bookings;
@@ -88,22 +164,28 @@ const ManageBookings = () => {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 py-8'>
 
         {/* Header */}
-        <div className='flex items-center justify-between mb-6'>
+        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6'>
           <div>
-            <Link to='/admin' className='text-xs text-gray-400 hover:text-blue-600 transition-colors'>
-              ← Dashboard
+            <Link to='/admin' className='text-xs text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-1 mb-1 w-fit'>
+              <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
+              </svg>
+              Dashboard
             </Link>
-            <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 mt-1'>Manage Bookings</h1>
+            <h1 className='text-2xl sm:text-3xl font-bold text-gray-900'>Manage Bookings</h1>
           </div>
-          <span className='text-xs text-gray-400 bg-white px-3 py-1.5 rounded-xl shadow-sm'>
+          <span className='text-xs text-gray-400 bg-white px-3 py-1.5 rounded-xl shadow-sm w-fit'>
             {filteredBookings.length} bookings
           </span>
         </div>
 
         {/* Success / Error */}
         {success && (
-          <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 text-center'>
-            ✅ {success}
+          <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 text-center flex items-center justify-center gap-2'>
+            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
+            </svg>
+            {success}
           </div>
         )}
         {error && (
@@ -118,7 +200,11 @@ const ManageBookings = () => {
             <button
               key={i}
               onClick={() => setFilterStatus(stat.label === 'Total' ? '' : stat.label.toLowerCase())}
-              className={`bg-white rounded-2xl shadow-sm p-3 text-center transition-all hover:shadow-md ${filterStatus === stat.label.toLowerCase() ? 'ring-2 ring-blue-500' : ''}`}
+              className={`bg-white rounded-2xl shadow-sm p-3 text-center transition-all hover:shadow-md ${
+                filterStatus === stat.label.toLowerCase() || (stat.label === 'Total' && filterStatus === '')
+                  ? 'ring-2 ring-blue-500'
+                  : ''
+              }`}
             >
               <p className={`text-xl sm:text-2xl font-black mb-0.5 ${stat.color}`}>{stat.value}</p>
               <p className='text-xs text-gray-400'>{stat.label}</p>
@@ -132,7 +218,11 @@ const ManageBookings = () => {
             <button
               key={status}
               onClick={() => setFilterStatus(status)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${filterStatus === status ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`}
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                filterStatus === status
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'bg-white text-gray-500 hover:bg-gray-50'
+              }`}
             >
               {status === '' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
             </button>
@@ -152,13 +242,17 @@ const ManageBookings = () => {
               <div className='w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin' />
             </div>
           ) : filteredBookings.length === 0 ? (
-            <div className='text-center py-16 text-gray-300 text-sm'>
-              No bookings found
+            <div className='text-center py-16'>
+              <p className='text-3xl mb-2'>📋</p>
+              <p className='text-gray-400 text-sm'>No bookings found</p>
             </div>
           ) : (
             <div className='divide-y divide-gray-50'>
               {filteredBookings.map((booking) => (
-                <div key={booking._id} className='p-4 sm:p-5 hover:bg-gray-50 transition-colors'>
+                <div
+                  key={booking._id}
+                  className='p-4 sm:p-5 hover:bg-gray-50 transition-colors'
+                >
                   <div className='flex flex-col sm:flex-row gap-4'>
 
                     {/* Car Image */}
@@ -166,7 +260,7 @@ const ManageBookings = () => {
                       {booking.car?.images?.[0] ? (
                         <img src={booking.car.images[0]} alt='' className='w-full h-full object-cover' />
                       ) : (
-                        <div className='w-full h-full flex items-center justify-center text-gray-300'>🚗</div>
+                        <div className='w-full h-full flex items-center justify-center text-gray-300 text-lg'>🚗</div>
                       )}
                     </div>
 
@@ -182,10 +276,10 @@ const ManageBookings = () => {
                           </p>
                         </div>
                         <div className='flex flex-col items-end gap-1 flex-shrink-0'>
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize ${getStatusColor(booking.status)}`}>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-semibold capitalize ${getStatusColor(booking.status)}`}>
                             {booking.status}
                           </span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize ${getPaymentColor(booking.paymentStatus)}`}>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-semibold capitalize ${getPaymentColor(booking.paymentStatus)}`}>
                             {booking.paymentStatus}
                           </span>
                         </div>
@@ -201,39 +295,40 @@ const ManageBookings = () => {
 
                       {/* Actions */}
                       <div className='flex flex-wrap items-center gap-2'>
-                        {/* Status Update */}
-                        <select
-                          value={booking.status}
-                          onChange={(e) => handleStatusUpdate(booking._id, e.target.value, booking.paymentStatus)}
-                          disabled={updatingId === booking._id}
-                          className='px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-xl text-xs text-gray-600 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer'
-                        >
-                          <option value='pending'>Pending</option>
-                          <option value='confirmed'>Confirmed</option>
-                          <option value='completed'>Completed</option>
-                          <option value='cancelled'>Cancelled</option>
-                        </select>
 
-                        {/* Payment Update */}
-                        <select
-                          value={booking.paymentStatus}
-                          onChange={(e) => handleStatusUpdate(booking._id, booking.status, e.target.value)}
-                          disabled={updatingId === booking._id}
-                          className='px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-xl text-xs text-gray-600 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer'
-                        >
-                          <option value='unpaid'>Unpaid</option>
-                          <option value='paid'>Paid</option>
-                          <option value='refunded'>Refunded</option>
-                        </select>
+                        {/* Status Select */}
+                        <Select
+                          value={statusOptions.find(o => o.value === booking.status)}
+                          onChange={(opt) => handleStatusUpdate(booking._id, opt.value, booking.paymentStatus)}
+                          options={statusOptions}
+                          styles={makeSelectStyles('status')}
+                          isDisabled={updatingId === booking._id}
+                          isSearchable={false}
+                        />
 
+                        {/* Payment Select */}
+                        <Select
+                          value={paymentOptions.find(o => o.value === booking.paymentStatus)}
+                          onChange={(opt) => handleStatusUpdate(booking._id, booking.status, opt.value)}
+                          options={paymentOptions}
+                          styles={makeSelectStyles('payment')}
+                          isDisabled={updatingId === booking._id}
+                          isSearchable={false}
+                        />
+
+                        {/* Loading spinner */}
                         {updatingId === booking._id && (
                           <div className='w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin' />
                         )}
 
+                        {/* Delete */}
                         <button
                           onClick={() => setDeleteConfirm(booking._id)}
-                          className='px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-semibold rounded-xl transition-colors ml-auto'
+                          className='ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-semibold rounded-xl transition-colors'
                         >
+                          <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16' />
+                          </svg>
                           Delete
                         </button>
                       </div>
@@ -248,10 +343,15 @@ const ManageBookings = () => {
         {/* Delete Confirm Modal */}
         {deleteConfirm && (
           <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 px-4'>
-            <div className='bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full'>
-              <h3 className='text-sm font-bold text-gray-900 mb-2'>Delete Booking</h3>
-              <p className='text-xs text-gray-400 mb-5'>
-                Are you sure you want to delete this booking? This action cannot be undone.
+            <div className='bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full' style={{ animation: 'scaleIn 0.2s ease-out forwards' }}>
+              <div className='w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4'>
+                <svg className='w-6 h-6 text-red-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16' />
+                </svg>
+              </div>
+              <h3 className='text-sm font-bold text-gray-900 text-center mb-1'>Delete Booking</h3>
+              <p className='text-xs text-gray-400 text-center mb-5'>
+                Are you sure? This action cannot be undone.
               </p>
               <div className='flex gap-3'>
                 <button
