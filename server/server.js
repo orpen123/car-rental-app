@@ -79,6 +79,7 @@ import bookingRoutes from './src/routes/bookingRoutes.js';
 import uploadRoutes from './src/routes/uploadRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import paymentRoutes from './src/routes/paymentRoutes.js';
+import reviewRoutes from './src/routes/reviewRoutes.js';
 
 const app = express();
 
@@ -103,6 +104,8 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/reviews', reviewRoutes);
+
 
 // Error handler
 app.use((err, req, res, next) => {
