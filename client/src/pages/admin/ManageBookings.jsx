@@ -123,8 +123,11 @@ const ManageBookings = () => {
       border: '1px solid #f1f5f9',
       overflow: 'hidden',
       marginTop: '4px',
-      zIndex: 999,
-      animation: 'selectSlideDown 0.15s ease-out forwards',
+      zIndex: 9999,
+    }),
+    menuPortal: (base) => ({
+      ...base,
+      zIndex: 9999,
     }),
     menuList: (base) => ({ ...base, padding: '4px' }),
     option: (base, state) => ({
@@ -230,7 +233,7 @@ const ManageBookings = () => {
         </div>
 
         {/* Bookings List */}
-        <div className='bg-white rounded-2xl shadow-sm overflow-hidden'>
+        <div className='bg-white rounded-2xl shadow-sm overflow-visible'>
           <div className='px-5 py-4 border-b border-gray-50 flex items-center justify-between'>
             <h2 className='text-sm font-bold text-gray-900 flex items-center gap-2'>
               <Calendar size={14} className='text-blue-500' />
@@ -331,6 +334,8 @@ const ManageBookings = () => {
                             styles={makeSelectStyles('status')}
                             isDisabled={updatingId === booking._id}
                             isSearchable={false}
+                            menuPortalTarget={document.body}
+                            menuPosition='fixed'
                           />
                           <Select
                             value={paymentOptions.find(o => o.value === booking.paymentStatus)}
@@ -339,6 +344,8 @@ const ManageBookings = () => {
                             styles={makeSelectStyles('payment')}
                             isDisabled={updatingId === booking._id}
                             isSearchable={false}
+                            menuPortalTarget={document.body}
+                            menuPosition='fixed'
                           />
                           {updatingId === booking._id && (
                             <RefreshCw size={14} className='text-blue-600 animate-spin' />
