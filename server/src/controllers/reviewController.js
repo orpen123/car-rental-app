@@ -91,3 +91,15 @@ export const canReview = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate('user', 'name email')
+      .populate('car', 'brand model')
+      .sort({ createdAt: -1 });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
