@@ -1,4 +1,26 @@
 import Car from "../models/Car.js";
+import Booking from '../models/Booking.js';
+
+
+
+export const getCarBookedDates = async (req, res) => {
+  try {
+    const bookings = await Booking.find({
+      car: req.params.id,
+      status: { $nin: ['cancelled'] },
+    }).select('startDate endDate');
+
+    // Generate all booked date ranges
+    const bookedRanges = bookings.map(b => ({
+      start: new Date(b.startDate),
+      end: new Date(b.endDate),
+    }));
+
+    res.status(200).json(bookedRanges);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // @desc    Get all cars
 // @route   GET /api/cars
