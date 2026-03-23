@@ -357,3 +357,50 @@ input, select, textarea {
   margin: 3px !important;
   border-radius: 50% !important;
 }
+
+
+
+/* ===== MANAGE BOOKINGS SELECT PORTAL ===== */
+.bookings-select__menu {
+  animation: selectSlideDown 0.2s ease-out forwards !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
+  border: 1px solid #f1f5f9 !important;
+  overflow: hidden !important;
+}
+
+.bookings-select__menu-list {
+  padding: 4px !important;
+}
+
+.bookings-select__option {
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  cursor: pointer !important;
+  transition: all 0.1s ease !important;
+}
+
+.bookings-select__option--is-focused {
+  background-color: #eff6ff !important;
+  color: #374151 !important;
+}
+
+.bookings-select__option--is-selected {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.bookings-select__control {
+  transition: all 0.2s ease !important;
+}
+
+.bookings-select__control:hover {
+  border-color: #3b82f6 !important;
+  background: white !important;
+}
+
+.bookings-select__dropdown-indicator {
+  transition: transform 0.2s ease !important;
+}

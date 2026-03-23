@@ -328,6 +328,7 @@ const ManageBookings = () => {
                         {/* Actions */}
                         <div className='flex flex-wrap items-center gap-2'>
                           <Select
+                            classNamePrefix='bookings-select'
                             value={statusOptions.find(o => o.value === booking.status)}
                             onChange={(opt) => handleStatusUpdate(booking._id, opt.value, booking.paymentStatus)}
                             options={statusOptions}
@@ -338,6 +339,7 @@ const ManageBookings = () => {
                             menuPosition='fixed'
                           />
                           <Select
+                            classNamePrefix='bookings-select'
                             value={paymentOptions.find(o => o.value === booking.paymentStatus)}
                             onChange={(opt) => handleStatusUpdate(booking._id, booking.status, opt.value)}
                             options={paymentOptions}
