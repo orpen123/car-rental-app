@@ -1,16 +1,14 @@
-// pages/About.jsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  FaCar, 
-  FaUsers, 
-  FaShieldAlt, 
-  FaClock, 
-  FaAward, 
-  FaStar, 
-  FaQuoteLeft, 
-  FaUser, 
-  FaCalendarAlt 
+import {
+  FaCar,
+  FaUsers,
+  FaShieldAlt,
+  FaAward,
+  FaStar,
+  FaQuoteLeft,
+  FaCalendarAlt,
+  FaCheckCircle
 } from 'react-icons/fa';
 import api from '../services/api';
 
@@ -23,16 +21,11 @@ const About = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        console.log('Fetching from:', api.defaults.baseURL + '/reviews');
-        
         const response = await api.get('/reviews');
-        
-        console.log('Reviews fetched:', response.data);
-        setReviews(response.data.slice(0, 4));
+        setReviews(response.data.slice(0, 4)); // Display fewer reviews for conciseness
         setError(null);
       } catch (error) {
         console.error('Error fetching reviews:', error);
-        console.error('Error response:', error.response?.data);
         setError(error.response?.data?.message || 'Failed to load reviews');
       } finally {
         setReviewsLoading(false);
@@ -43,16 +36,15 @@ const About = () => {
 
   const stats = [
     { number: '500+', label: 'Happy Customers', icon: FaUsers },
-    { number: '50+', label: 'Luxury Cars', icon: FaCar },
+    { number: '50+', label: 'Premium Cars', icon: FaCar },
     { number: '98%', label: 'Satisfaction', icon: FaAward },
-    { number: '24/7', label: 'Support', icon: FaClock },
   ];
 
   const values = [
     {
       icon: FaShieldAlt,
       title: 'Trust & Safety',
-      description: 'All vehicles are fully insured and regularly maintained.',
+      description: 'All vehicles are fully insured and regularly maintained for your peace of mind.',
     },
     {
       icon: FaAward,
@@ -61,8 +53,8 @@ const About = () => {
     },
     {
       icon: FaStar,
-      title: 'Best Price',
-      description: 'No hidden fees. What you see is what you pay.',
+      title: 'Transparent Pricing',
+      description: 'No hidden fees. What you see is what you pay, always.',
     },
   ];
 
@@ -75,10 +67,9 @@ const About = () => {
             key={star}
             className={`w-3 h-3 ${
               star <= rating 
-                ? 'text-yellow-400' 
+                ? 'text-yellow-400'
                 : 'text-gray-300'
             }`}
-            style={star <= rating ? { fill: '#facc15' } : {}}
           />
         ))}
       </div>
@@ -106,137 +97,144 @@ const About = () => {
     ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
     : 0;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
+    <div className="min-h-screen bg-white text-gray-900 pt-20">
       {/* Hero Section */}
-      <section className="bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <motion.h1 
+      <section className="bg-white py-16">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl md:text-4xl font-bold mb-3"
+            className="text-4xl font-extrabold text-gray-900 mb-4"
           >
-            Your Journey, Our Passion
+            About CarRental
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-base text-blue-100 max-w-2xl mx-auto"
+            className="text-lg text-gray-700 leading-relaxed"
           >
-            Premium car rental service with transparent pricing and exceptional customer care.
+            Your trusted partner for premium car rentals. We offer a seamless experience with a diverse fleet and exceptional customer service.
           </motion.p>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.4 }}
-                className="text-center"
-              >
-                <div className="inline-flex p-2 bg-blue-100 rounded-xl mb-2">
-                  <Icon className="w-5 h-5 text-blue-600" />
-                </div>
-                <div className="text-2xl font-bold text-gray-900 mb-0.5">
-                  {stat.number}
-                </div>
-                <div className="text-xs text-gray-600">{stat.label}</div>
-              </motion.div>
-            );
-          })}
+      <section className="bg-gray-50 py-12">
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="text-center p-6 bg-white rounded-lg shadow-sm"
+                >
+                  <Icon className="w-8 h-8 text-gray-800 mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-gray-900 mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-gray-600">{stat.label}</div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid md:grid-cols-2 gap-10 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
-            <h2 className="text-2xl font-bold text-gray-900">Our Story</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Founded in 2020, CarRental began with a simple mission: to make premium car rental 
-              accessible, transparent, and hassle-free.
-            </p>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Today, we're proud to serve thousands of customers with our growing fleet of 
-              quality vehicles. Your satisfaction is our priority.
-            </p>
-            <div className="flex items-center gap-3 pt-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <img
-                    key={i}
-                    src={`https://randomuser.me/api/portraits/men/${i}.jpg`}
-                    alt="Team member"
-                    className="w-8 h-8 rounded-full border-2 border-white"
-                  />
-                ))}
-              </div>
-              <div className="text-xs text-gray-600">
-                <span className="font-semibold text-gray-900">500+</span> customers served
-              </div>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="relative"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800"
-              alt="Luxury car fleet"
-              className="rounded-2xl shadow-lg w-full h-auto"
-            />
-          </motion.div>
+      {/* Our Story & Mission */}
+      <section className="bg-white py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              <h2 className="text-3xl font-bold text-gray-900">Our Story & Mission</h2>
+              <p className="text-gray-700 leading-relaxed">
+                Founded in 2020, CarRental set out to redefine the car rental experience. We believe in making luxury and convenience accessible to everyone, ensuring every journey is memorable and hassle-free.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                Our mission is to provide top-tier vehicles, transparent pricing, and unparalleled customer support, making us the preferred choice for travelers and locals alike.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1549399542-747805177964?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Modern car interior"
+                className="rounded-lg shadow-md w-full h-auto"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Our Values */}
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div
+      <section className="bg-gray-50 py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-8"
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-gray-900 text-center mb-10"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Our Values</h2>
-            <p className="text-sm text-gray-600">What makes us different</p>
-          </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">
+            Our Core Values
+          </motion.h2>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow"
+                  variants={itemVariants}
+                  className="bg-white p-6 rounded-lg shadow-sm text-center"
                 >
-                  <div className="inline-flex p-2 bg-blue-100 rounded-xl mb-3">
-                    <Icon className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">
+                  <Icon className="w-8 h-8 text-gray-800 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     {value.title}
                   </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -245,115 +243,118 @@ const About = () => {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Customer Reviews Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Customer Reviews</h2>
-                <p className="text-sm text-gray-600">What our customers say about us</p>
-              </div>
+      <section className="bg-white py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold text-gray-900 text-center mb-10"
+          >
+            What Our Customers Say
+          </motion.h2>
+          <div className="bg-gray-50 rounded-lg shadow-md overflow-hidden">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-100">
               {reviews.length > 0 && (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-4">
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-blue-600">{averageRating}</div>
-                    <div className="text-xs text-gray-500">out of 5</div>
+                    <div className="text-3xl font-bold text-gray-900">{averageRating}</div>
+                    <div className="text-sm text-gray-600">out of 5</div>
                   </div>
                   <div>
                     {renderStars(Math.round(averageRating))}
-                    <div className="text-xs text-gray-500 mt-1">{reviews.length} reviews</div>
+                    <div className="text-sm text-gray-600 mt-1">{reviews.length} reviews</div>
                   </div>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Reviews List */}
-          <div>
-            {reviewsLoading ? (
-              <div className="p-12 text-center">
-                <div className="inline-block w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-              </div>
-            ) : error ? (
-              <div className="p-12 text-center">
-                <p className="text-sm text-red-500 mb-2">{error}</p>
-                <button 
-                  onClick={() => window.location.reload()}
-                  className="text-blue-600 text-sm hover:underline"
-                >
-                  Try again
-                </button>
-              </div>
-            ) : reviews.length === 0 ? (
-              <div className="p-12 text-center text-gray-500">
-                <FaQuoteLeft className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p className="text-sm">No reviews yet. Be the first to share your experience!</p>
-              </div>
-            ) : (
-              <div className="divide-y divide-gray-100">
-                {reviews.map((review, index) => (
-                  <motion.div
-                    key={review._id}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                    className="p-5 hover:bg-gray-50 transition-colors"
+            {/* Reviews List */}
+            <div>
+              {reviewsLoading ? (
+                <div className="p-12 text-center">
+                  <div className="inline-block w-6 h-6 border-2 border-gray-800 border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : error ? (
+                <div className="p-12 text-center">
+                  <p className="text-sm text-red-500 mb-2">{error}</p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="text-gray-800 text-sm hover:underline"
                   >
-                    <div className="flex gap-3">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                        {getUserName(review).charAt(0).toUpperCase()}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
-                          <div className="flex items-center gap-2">
+                    Try again
+                  </button>
+                </div>
+              ) : reviews.length === 0 ? (
+                <div className="p-12 text-center text-gray-500">
+                  <FaQuoteLeft className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                  <p className="text-sm">No reviews yet. Be the first to share your experience!</p>
+                </div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {reviews.map((review, index) => (
+                    <motion.div
+                      key={review._id}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      className="p-6 hover:bg-gray-100 transition-colors"
+                    >
+                      <div className="flex gap-4">
+                        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-800 font-bold text-md flex-shrink-0">
+                          {getUserName(review).charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
                             <span className="font-semibold text-gray-900 text-sm">
                               {getUserName(review)}
                             </span>
-                            <span className="text-xs text-gray-400 flex items-center gap-1">
-                              <FaCalendarAlt className="w-3 h-3" />
-                              {formatDate(review.createdAt)}
-                            </span>
+                            {renderStars(review.rating)}
                           </div>
-                          {renderStars(review.rating)}
+                          <p className="text-sm text-gray-700 leading-relaxed italic mt-1">
+                            "{review.comment}"
+                          </p>
+                          <span className="text-xs text-gray-500 flex items-center gap-1 mt-2">
+                            <FaCalendarAlt className="w-3 h-3" />
+                            {formatDate(review.createdAt)}
+                          </span>
                         </div>
-                        <p className="text-sm text-gray-600 leading-relaxed mt-1">
-                          "{review.comment}"
-                        </p>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <section className="bg-gray-900 py-16">
+        <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-white mb-2">
-              Ready to Start Your Journey?
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready for Your Next Adventure?
             </h2>
-            <p className="text-sm text-blue-100 mb-5">
-              Choose from our premium fleet and experience the best car rental service
+            <p className="text-base text-gray-300 mb-8">
+              Explore our fleet and book your perfect car today.
             </p>
             <a
               href="/cars"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-8 py-3 rounded-md font-semibold hover:bg-gray-200 transition-all"
             >
               Browse Cars
               <FaCar className="w-4 h-4" />
