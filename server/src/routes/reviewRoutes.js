@@ -15,7 +15,7 @@ router.get('/car/:carId', getCarReviews);
 router.get('/can-review/:bookingId', protect, canReview);
 router.delete('/:id', protect, adminOnly, deleteReview);
 // router.get('/', protect, adminOnly, getAllReviews);
-router.get('/', getAllReviews);
+router.get('/',getAllReviews);
 
 export default router;
 

@@ -1,7 +1,17 @@
 // pages/About.jsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Car, Users, Shield, Clock, Award, Star, Quote, User, Calendar } from 'lucide-react';
+import { 
+  FaCar, 
+  FaUsers, 
+  FaShieldAlt, 
+  FaClock, 
+  FaAward, 
+  FaStar, 
+  FaQuoteLeft, 
+  FaUser, 
+  FaCalendarAlt 
+} from 'react-icons/fa';
 import api from '../services/api';
 
 const About = () => {
@@ -15,11 +25,10 @@ const About = () => {
       try {
         console.log('Fetching from:', api.defaults.baseURL + '/reviews');
         
-        // ✅ FIX: Remove '/api' since it's already in baseURL
         const response = await api.get('/reviews');
         
         console.log('Reviews fetched:', response.data);
-        setReviews(response.data.slice(0, 4)); // Show only 4 latest reviews
+        setReviews(response.data.slice(0, 4));
         setError(null);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -33,25 +42,25 @@ const About = () => {
   }, []);
 
   const stats = [
-    { number: '500+', label: 'Happy Customers', icon: Users },
-    { number: '50+', label: 'Luxury Cars', icon: Car },
-    { number: '98%', label: 'Satisfaction', icon: Award },
-    { number: '24/7', label: 'Support', icon: Clock },
+    { number: '500+', label: 'Happy Customers', icon: FaUsers },
+    { number: '50+', label: 'Luxury Cars', icon: FaCar },
+    { number: '98%', label: 'Satisfaction', icon: FaAward },
+    { number: '24/7', label: 'Support', icon: FaClock },
   ];
 
   const values = [
     {
-      icon: Shield,
+      icon: FaShieldAlt,
       title: 'Trust & Safety',
       description: 'All vehicles are fully insured and regularly maintained.',
     },
     {
-      icon: Award,
+      icon: FaAward,
       title: 'Quality Service',
       description: 'Premium cars with exceptional service at competitive prices.',
     },
     {
-      icon: Star,
+      icon: FaStar,
       title: 'Best Price',
       description: 'No hidden fees. What you see is what you pay.',
     },
@@ -62,13 +71,14 @@ const About = () => {
     return (
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
-          <Star
+          <FaStar
             key={star}
             className={`w-3 h-3 ${
               star <= rating 
-                ? 'text-yellow-400 fill-yellow-400' 
-                : 'text-gray-300 fill-gray-300'
+                ? 'text-yellow-400' 
+                : 'text-gray-300'
             }`}
+            style={star <= rating ? { fill: '#facc15' } : {}}
           />
         ))}
       </div>
@@ -282,7 +292,7 @@ const About = () => {
               </div>
             ) : reviews.length === 0 ? (
               <div className="p-12 text-center text-gray-500">
-                <Quote className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                <FaQuoteLeft className="w-12 h-12 mx-auto mb-3 text-gray-300" />
                 <p className="text-sm">No reviews yet. Be the first to share your experience!</p>
               </div>
             ) : (
@@ -307,7 +317,7 @@ const About = () => {
                               {getUserName(review)}
                             </span>
                             <span className="text-xs text-gray-400 flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
+                              <FaCalendarAlt className="w-3 h-3" />
                               {formatDate(review.createdAt)}
                             </span>
                           </div>
@@ -346,7 +356,7 @@ const About = () => {
               className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all text-sm"
             >
               Browse Cars
-              <Car className="w-4 h-4" />
+              <FaCar className="w-4 h-4" />
             </a>
           </motion.div>
         </div>

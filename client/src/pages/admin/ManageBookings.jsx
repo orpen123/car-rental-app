@@ -1,10 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
-import {
-  ArrowLeft, Trash2, CheckCircle, Clock, XCircle, Flag,
-  CreditCard, Calendar, MapPin, User, Car, RefreshCw
-} from 'lucide-react';
+import { 
+  FaArrowLeft, 
+  FaTrashAlt, 
+  FaCheckCircle, 
+  FaClock, 
+  FaTimesCircle, 
+  FaFlag,
+  FaCreditCard, 
+  FaCalendarAlt, 
+  FaMapMarkerAlt, 
+  FaUser, 
+  FaCar, 
+  FaSyncAlt 
+} from 'react-icons/fa';
 import api from '../../services/api.js';
 
 const ManageBookings = () => {
@@ -57,19 +67,19 @@ const ManageBookings = () => {
 
   const getStatusConfig = (status) => {
     switch (status) {
-      case 'confirmed': return { bg: 'bg-green-100 text-green-700', icon: <CheckCircle size={11} /> };
-      case 'pending': return { bg: 'bg-yellow-100 text-yellow-700', icon: <Clock size={11} /> };
-      case 'cancelled': return { bg: 'bg-red-100 text-red-600', icon: <XCircle size={11} /> };
-      case 'completed': return { bg: 'bg-blue-100 text-blue-700', icon: <Flag size={11} /> };
+      case 'confirmed': return { bg: 'bg-green-100 text-green-700', icon: <FaCheckCircle size={11} /> };
+      case 'pending': return { bg: 'bg-yellow-100 text-yellow-700', icon: <FaClock size={11} /> };
+      case 'cancelled': return { bg: 'bg-red-100 text-red-600', icon: <FaTimesCircle size={11} /> };
+      case 'completed': return { bg: 'bg-blue-100 text-blue-700', icon: <FaFlag size={11} /> };
       default: return { bg: 'bg-gray-100 text-gray-500', icon: null };
     }
   };
 
   const getPaymentConfig = (status) => {
     switch (status) {
-      case 'paid': return { bg: 'bg-green-100 text-green-700', icon: <CheckCircle size={11} /> };
-      case 'unpaid': return { bg: 'bg-orange-100 text-orange-600', icon: <CreditCard size={11} /> };
-      case 'refunded': return { bg: 'bg-purple-100 text-purple-700', icon: <RefreshCw size={11} /> };
+      case 'paid': return { bg: 'bg-green-100 text-green-700', icon: <FaCheckCircle size={11} /> };
+      case 'unpaid': return { bg: 'bg-orange-100 text-orange-600', icon: <FaCreditCard size={11} /> };
+      case 'refunded': return { bg: 'bg-purple-100 text-purple-700', icon: <FaSyncAlt size={11} /> };
       default: return { bg: 'bg-gray-100 text-gray-500', icon: null };
     }
   };
@@ -149,11 +159,11 @@ const ManageBookings = () => {
     : bookings;
 
   const stats = [
-    { label: 'Total', value: bookings.length, color: 'text-gray-900', icon: <Car size={14} className='text-gray-400' /> },
-    { label: 'Pending', value: bookings.filter(b => b.status === 'pending').length, color: 'text-yellow-600', icon: <Clock size={14} className='text-yellow-400' /> },
-    { label: 'Confirmed', value: bookings.filter(b => b.status === 'confirmed').length, color: 'text-green-600', icon: <CheckCircle size={14} className='text-green-400' /> },
-    { label: 'Cancelled', value: bookings.filter(b => b.status === 'cancelled').length, color: 'text-red-500', icon: <XCircle size={14} className='text-red-400' /> },
-    { label: 'Completed', value: bookings.filter(b => b.status === 'completed').length, color: 'text-blue-600', icon: <Flag size={14} className='text-blue-400' /> },
+    { label: 'Total', value: bookings.length, color: 'text-gray-900', icon: <FaCar size={14} className='text-gray-400' /> },
+    { label: 'Pending', value: bookings.filter(b => b.status === 'pending').length, color: 'text-yellow-600', icon: <FaClock size={14} className='text-yellow-400' /> },
+    { label: 'Confirmed', value: bookings.filter(b => b.status === 'confirmed').length, color: 'text-green-600', icon: <FaCheckCircle size={14} className='text-green-400' /> },
+    { label: 'Cancelled', value: bookings.filter(b => b.status === 'cancelled').length, color: 'text-red-500', icon: <FaTimesCircle size={14} className='text-red-400' /> },
+    { label: 'Completed', value: bookings.filter(b => b.status === 'completed').length, color: 'text-blue-600', icon: <FaFlag size={14} className='text-blue-400' /> },
   ];
 
   return (
@@ -164,13 +174,13 @@ const ManageBookings = () => {
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6'>
           <div>
             <Link to='/admin' className='text-xs text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-1 mb-1 w-fit'>
-              <ArrowLeft size={12} />
+              <FaArrowLeft size={12} />
               Dashboard
             </Link>
             <h1 className='text-2xl sm:text-3xl font-bold text-gray-900'>Manage Bookings</h1>
           </div>
           <span className='text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full font-semibold w-fit flex items-center gap-1.5'>
-            <Calendar size={12} />
+            <FaCalendarAlt size={12} />
             {filteredBookings.length} bookings
           </span>
         </div>
@@ -178,13 +188,13 @@ const ManageBookings = () => {
         {/* Alerts */}
         {success && (
           <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 flex items-center justify-center gap-2'>
-            <CheckCircle size={14} />
+            <FaCheckCircle size={14} />
             {success}
           </div>
         )}
         {error && (
           <div className='bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 mb-4 flex items-center justify-center gap-2'>
-            <XCircle size={14} />
+            <FaTimesCircle size={14} />
             {error}
           </div>
         )}
@@ -212,10 +222,10 @@ const ManageBookings = () => {
         <div className='flex items-center gap-2 mb-4 flex-wrap'>
           {[
             { value: '', label: 'All' },
-            { value: 'pending', label: 'Pending', icon: <Clock size={10} /> },
-            { value: 'confirmed', label: 'Confirmed', icon: <CheckCircle size={10} /> },
-            { value: 'completed', label: 'Completed', icon: <Flag size={10} /> },
-            { value: 'cancelled', label: 'Cancelled', icon: <XCircle size={10} /> },
+            { value: 'pending', label: 'Pending', icon: <FaClock size={10} /> },
+            { value: 'confirmed', label: 'Confirmed', icon: <FaCheckCircle size={10} /> },
+            { value: 'completed', label: 'Completed', icon: <FaFlag size={10} /> },
+            { value: 'cancelled', label: 'Cancelled', icon: <FaTimesCircle size={10} /> },
           ].map((item) => (
             <button
               key={item.value}
@@ -236,7 +246,7 @@ const ManageBookings = () => {
         <div className='bg-white rounded-2xl shadow-sm overflow-visible'>
           <div className='px-5 py-4 border-b border-gray-50 flex items-center justify-between'>
             <h2 className='text-sm font-bold text-gray-900 flex items-center gap-2'>
-              <Calendar size={14} className='text-blue-500' />
+              <FaCalendarAlt size={14} className='text-blue-500' />
               {filterStatus ? `${filterStatus.charAt(0).toUpperCase() + filterStatus.slice(1)} Bookings` : 'All Bookings'}
             </h2>
             {filteredBookings.length > 0 && (
@@ -250,7 +260,7 @@ const ManageBookings = () => {
             </div>
           ) : filteredBookings.length === 0 ? (
             <div className='text-center py-16'>
-              <Calendar size={40} className='text-gray-200 mx-auto mb-3' />
+              <FaCalendarAlt size={40} className='text-gray-200 mx-auto mb-3' />
               <p className='text-gray-400 text-sm font-medium'>No bookings found</p>
             </div>
           ) : (
@@ -272,7 +282,7 @@ const ManageBookings = () => {
                           <img src={booking.car.images[0]} alt='' className='w-full h-full object-cover' />
                         ) : (
                           <div className='w-full h-full flex items-center justify-center'>
-                            <Car size={20} className='text-gray-300' />
+                            <FaCar size={20} className='text-gray-300' />
                           </div>
                         )}
                       </div>
@@ -287,7 +297,7 @@ const ManageBookings = () => {
                               {booking.car?.brand} {booking.car?.model}
                             </p>
                             <p className='text-xs text-gray-400 flex items-center gap-1 truncate'>
-                              <User size={10} />
+                              <FaUser size={10} />
                               {booking.user?.name}
                               <span className='hidden sm:inline'>• {booking.user?.email}</span>
                             </p>
@@ -307,16 +317,16 @@ const ManageBookings = () => {
                         {/* Dates + Price */}
                         <div className='flex flex-wrap items-center gap-2 text-xs text-gray-400 mb-3'>
                           <span className='flex items-center gap-1'>
-                            <Calendar size={10} />
+                            <FaCalendarAlt size={10} />
                             {new Date(booking.startDate).toLocaleDateString()} → {new Date(booking.endDate).toLocaleDateString()}
                           </span>
                           <span className='hidden sm:flex items-center gap-1'>
-                            <Clock size={10} />
+                            <FaClock size={10} />
                             {booking.totalDays} days
                           </span>
                           {booking.pickupLocation && (
                             <span className='hidden sm:flex items-center gap-1'>
-                              <MapPin size={10} />
+                              <FaMapMarkerAlt size={10} />
                               {booking.pickupLocation}
                             </span>
                           )}
@@ -350,13 +360,13 @@ const ManageBookings = () => {
                             menuPosition='fixed'
                           />
                           {updatingId === booking._id && (
-                            <RefreshCw size={14} className='text-blue-600 animate-spin' />
+                            <FaSyncAlt size={14} className='text-blue-600 animate-spin' />
                           )}
                           <button
                             onClick={() => setDeleteConfirm(booking._id)}
                             className='ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-semibold rounded-xl transition-colors'
                           >
-                            <Trash2 size={12} />
+                            <FaTrashAlt size={12} />
                             <span className='hidden sm:block'>Delete</span>
                           </button>
                         </div>
@@ -374,7 +384,7 @@ const ManageBookings = () => {
           <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 px-4'>
             <div className='bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full' style={{ animation: 'scaleIn 0.2s ease-out forwards' }}>
               <div className='w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4'>
-                <Trash2 size={22} className='text-red-500' />
+                <FaTrashAlt size={22} className='text-red-500' />
               </div>
               <h3 className='text-sm font-bold text-gray-900 text-center mb-1'>Delete Booking</h3>
               <p className='text-xs text-gray-400 text-center mb-5'>Are you sure? This cannot be undone.</p>
@@ -383,7 +393,7 @@ const ManageBookings = () => {
                   onClick={() => handleDelete(deleteConfirm)}
                   className='flex-1 py-2.5 bg-red-500 hover:bg-red-600 text-white text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5'
                 >
-                  <Trash2 size={12} />
+                  <FaTrashAlt size={12} />
                   Delete
                 </button>
                 <button

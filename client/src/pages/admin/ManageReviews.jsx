@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Trash2, Star, Car, User, Calendar, XCircle, CheckCircle } from 'lucide-react';
+import { 
+  FaArrowLeft, 
+  FaTrashAlt, 
+  FaStar, 
+  FaCar, 
+  FaUser, 
+  FaCalendarAlt, 
+  FaTimesCircle, 
+  FaCheckCircle 
+} from 'react-icons/fa';
 import api from '../../services/api.js';
 
 const StarDisplay = ({ rating }) => (
   <div className='flex items-center gap-0.5'>
     {[1, 2, 3, 4, 5].map((star) => (
-      <span key={star} className={`text-sm ${star <= rating ? 'text-yellow-400' : 'text-gray-200'}`}>★</span>
+      <FaStar key={star} className={`text-sm ${star <= rating ? 'text-yellow-400' : 'text-gray-200'}`} />
     ))}
   </div>
 );
@@ -68,14 +77,14 @@ const ManageReviews = () => {
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6'>
           <div>
             <Link to='/admin' className='text-xs text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-1 mb-1 w-fit'>
-              <ArrowLeft size={12} />
+              <FaArrowLeft size={12} />
               Dashboard
             </Link>
             <h1 className='text-2xl sm:text-3xl font-bold text-gray-900'>Manage Reviews</h1>
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-xs bg-yellow-50 text-yellow-600 px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5'>
-              <Star size={12} />
+              <FaStar size={12} />
               Avg: {avgRating} / 5
             </span>
             <span className='text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full font-semibold'>
@@ -87,13 +96,13 @@ const ManageReviews = () => {
         {/* Alerts */}
         {success && (
           <div className='bg-green-50 border border-green-100 text-green-600 text-xs rounded-2xl px-4 py-3 mb-4 flex items-center justify-center gap-2'>
-            <CheckCircle size={14} />
+            <FaCheckCircle size={14} />
             {success}
           </div>
         )}
         {error && (
           <div className='bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 mb-4 flex items-center justify-center gap-2'>
-            <XCircle size={14} />
+            <FaTimesCircle size={14} />
             {error}
           </div>
         )}
@@ -130,7 +139,7 @@ const ManageReviews = () => {
             >
               {rating === 0 ? 'All' : (
                 <>
-                  {rating} <span className='text-yellow-400'>★</span>
+                  {rating} <FaStar className='text-yellow-400' size={12} />
                 </>
               )}
             </button>
@@ -141,7 +150,7 @@ const ManageReviews = () => {
         <div className='bg-white rounded-2xl shadow-sm overflow-hidden'>
           <div className='px-5 py-4 border-b border-gray-50 flex items-center justify-between'>
             <h2 className='text-sm font-bold text-gray-900 flex items-center gap-2'>
-              <Star size={14} className='text-yellow-400' />
+              <FaStar size={14} className='text-yellow-400' />
               {filterRating ? `${filterRating} Star Reviews` : 'All Reviews'}
             </h2>
             {filteredReviews.length > 0 && (
@@ -155,7 +164,7 @@ const ManageReviews = () => {
             </div>
           ) : filteredReviews.length === 0 ? (
             <div className='text-center py-16'>
-              <Star size={40} className='text-gray-200 mx-auto mb-3' />
+              <FaStar size={40} className='text-gray-200 mx-auto mb-3' />
               <p className='text-gray-400 text-sm font-medium'>No reviews found</p>
             </div>
           ) : (
@@ -180,7 +189,7 @@ const ManageReviews = () => {
                           <div className='flex items-center gap-2 flex-wrap'>
                             <p className='text-sm font-bold text-gray-900'>{review.user?.name}</p>
                             <span className='text-xs text-gray-400 flex items-center gap-1'>
-                              <User size={10} />
+                              <FaUser size={10} />
                               {review.user?.email}
                             </span>
                           </div>
@@ -193,19 +202,19 @@ const ManageReviews = () => {
                           onClick={() => setDeleteConfirm(review._id)}
                           className='flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-semibold rounded-xl transition-colors flex-shrink-0'
                         >
-                          <Trash2 size={12} />
+                          <FaTrashAlt size={12} />
                           <span className='hidden sm:block'>Delete</span>
                         </button>
                       </div>
 
                       {/* Car info */}
                       <div className='flex items-center gap-1.5 text-xs text-gray-400 mb-2'>
-                        <Car size={10} />
+                        <FaCar size={10} />
                         <span className='font-medium text-gray-600'>
                           {review.car?.brand} {review.car?.model}
                         </span>
                         <span>•</span>
-                        <Calendar size={10} />
+                        <FaCalendarAlt size={10} />
                         <span>{new Date(review.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                       </div>
 
@@ -226,7 +235,7 @@ const ManageReviews = () => {
           <div className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 px-4'>
             <div className='bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full' style={{ animation: 'scaleIn 0.2s ease-out forwards' }}>
               <div className='w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4'>
-                <Trash2 size={22} className='text-red-500' />
+                <FaTrashAlt size={22} className='text-red-500' />
               </div>
               <h3 className='text-sm font-bold text-gray-900 text-center mb-1'>Delete Review</h3>
               <p className='text-xs text-gray-400 text-center mb-5'>Are you sure? This cannot be undone.</p>
@@ -235,7 +244,7 @@ const ManageReviews = () => {
                   onClick={() => handleDelete(deleteConfirm)}
                   className='flex-1 py-2.5 bg-red-500 hover:bg-red-600 text-white text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5'
                 >
-                  <Trash2 size={12} />
+                  <FaTrashAlt size={12} />
                   Delete
                 </button>
                 <button
