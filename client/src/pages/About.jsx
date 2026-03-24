@@ -1,12 +1,32 @@
 // pages/About.jsx
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Award, Shield, Clock, Car, Heart, Star, MapPin } from 'lucide-react';
+import { Car, Users, Shield, Clock, Award, Star, Quote, User, Calendar } from 'lucide-react';
+import api from '../services/api';
 
 const About = () => {
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+
+  // Fetch reviews from backend
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await api.get('/reviews');
+        setReviews(response.data.slice(0, 4)); // Show only 4 latest reviews
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+    fetchReviews();
+  }, []);
+
   const stats = [
     { number: '500+', label: 'Happy Customers', icon: Users },
     { number: '50+', label: 'Luxury Cars', icon: Car },
-    { number: '98%', label: 'Satisfaction Rate', icon: Star },
+    { number: '98%', label: 'Satisfaction', icon: Award },
     { number: '24/7', label: 'Support', icon: Clock },
   ];
 
@@ -14,69 +34,83 @@ const About = () => {
     {
       icon: Shield,
       title: 'Trust & Safety',
-      description: 'All our vehicles are fully insured and regularly maintained to ensure your safety.',
-    },
-    {
-      icon: Heart,
-      title: 'Customer First',
-      description: 'Your satisfaction is our priority. We go the extra mile to serve you better.',
+      description: 'All vehicles are fully insured and regularly maintained.',
     },
     {
       icon: Award,
       title: 'Quality Service',
-      description: 'We provide premium cars with exceptional service at competitive prices.',
+      description: 'Premium cars with exceptional service at competitive prices.',
+    },
+    {
+      icon: Star,
+      title: 'Best Price',
+      description: 'No hidden fees. What you see is what you pay.',
     },
   ];
 
-  const team = [
-    {
-      name: 'John Smith',
-      role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400',
-      bio: '10+ years in automotive industry',
-    },
-    {
-      name: 'Sarah Johnson',
-      role: 'Operations Manager',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400',
-      bio: 'Ensuring smooth rentals daily',
-    },
-    {
-      name: 'Michael Chen',
-      role: 'Fleet Manager',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
-      bio: 'Maintaining our premium fleet',
-    },
-  ];
+  // Render star rating
+  const renderStars = (rating) => {
+    return (
+      <div className="flex items-center gap-0.5">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            className={`w-3 h-3 ${
+              star <= rating 
+                ? 'text-yellow-400 fill-yellow-400' 
+                : 'text-gray-300 fill-gray-300'
+            }`}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  // Get user name from user object or ID
+  const getUserName = (review) => {
+    if (review.user?.name) return review.user.name;
+    if (typeof review.user === 'string') return 'Customer';
+    return 'Customer';
+  };
+
+  // Format date
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
+
+  // Calculate average rating
+  const averageRating = reviews.length > 0
+    ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
       {/* Hero Section */}
-      <div className="relative bg-blue-600 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 text-center">
+      <section className="bg-blue-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-bold mb-6"
+            transition={{ duration: 0.5 }}
+            className="text-3xl md:text-4xl font-bold mb-3"
           >
             Your Journey, Our Passion
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-base text-blue-100 max-w-2xl mx-auto"
           >
-            We're revolutionizing car rental with premium vehicles, transparent pricing, and exceptional service.
+            Premium car rental service with transparent pricing and exceptional customer care.
           </motion.p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-50 to-transparent" />
-      </div>
+      </section>
 
       {/* Stats Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -84,55 +118,54 @@ const About = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
                 className="text-center"
               >
-                <div className="inline-flex p-3 bg-blue-100 rounded-2xl mb-4">
-                  <Icon className="w-8 h-8 text-blue-600" />
+                <div className="inline-flex p-2 bg-blue-100 rounded-xl mb-2">
+                  <Icon className="w-5 h-5 text-blue-600" />
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                <div className="text-2xl font-bold text-gray-900 mb-0.5">
                   {stat.number}
                 </div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-xs text-gray-600">{stat.label}</div>
               </motion.div>
             );
           })}
         </div>
-      </div>
+      </section>
 
       {/* Our Story */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="space-y-6"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Our Story
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <h2 className="text-2xl font-bold text-gray-900">Our Story</h2>
+            <p className="text-sm text-gray-600 leading-relaxed">
               Founded in 2020, CarRental began with a simple mission: to make premium car rental 
-              accessible, transparent, and hassle-free. What started as a small fleet of 10 cars 
-              has grown into a trusted service with over 50 luxury vehicles.
+              accessible, transparent, and hassle-free.
             </p>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              We believe that the right vehicle can transform any journey. Whether you're traveling 
-              for business, planning a family vacation, or need a reliable daily driver, we're here 
-              to help you find the perfect car for your needs.
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Today, we're proud to serve thousands of customers with our growing fleet of 
+              quality vehicles. Your satisfaction is our priority.
             </p>
-            <div className="flex items-center gap-4 pt-4">
+            <div className="flex items-center gap-3 pt-2">
               <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
+                {[1, 2, 3, 4].map((i) => (
                   <img
                     key={i}
-                    src={`https://randomuser.me/api/portraits/men/${i + 1}.jpg`}
+                    src={`https://randomuser.me/api/portraits/men/${i}.jpg`}
                     alt="Team member"
-                    className="w-10 h-10 rounded-full border-2 border-white"
+                    className="w-8 h-8 rounded-full border-2 border-white"
                   />
                 ))}
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-xs text-gray-600">
                 <span className="font-semibold text-gray-900">500+</span> customers served
               </div>
             </div>
@@ -140,36 +173,33 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
             className="relative"
           >
             <img
               src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800"
               alt="Luxury car fleet"
-              className="rounded-2xl shadow-2xl"
+              className="rounded-2xl shadow-lg w-full h-auto"
             />
-            <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-4 rounded-2xl shadow-lg">
-              <Car className="w-12 h-12" />
-            </div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* Our Values */}
-      <div className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="text-center mb-8"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Values
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              The principles that guide everything we do
-            </p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Our Values</h2>
+            <p className="text-sm text-gray-600">What makes us different</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
@@ -177,16 +207,17 @@ const About = () => {
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.4 }}
+                  className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow"
                 >
-                  <div className="inline-flex p-3 bg-blue-100 rounded-xl mb-4">
-                    <Icon className="w-6 h-6 text-blue-600" />
+                  <div className="inline-flex p-2 bg-blue-100 rounded-xl mb-3">
+                    <Icon className="w-5 h-5 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">
                     {value.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-sm text-gray-600 leading-relaxed">
                     {value.description}
                   </p>
                 </motion.div>
@@ -194,81 +225,110 @@ const About = () => {
             })}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Team Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Meet Our Team
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Dedicated professionals committed to your satisfaction
-          </p>
-        </motion.div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {team.map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-            >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-blue-600 font-medium mb-3">{member.role}</p>
-                <p className="text-gray-600">{member.bio}</p>
+      {/* Customer Reviews Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">Customer Reviews</h2>
+                <p className="text-sm text-gray-600">What our customers say about us</p>
               </div>
-            </motion.div>
-          ))}
+              {reviews.length > 0 && (
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-blue-600">{averageRating}</div>
+                    <div className="text-xs text-gray-500">out of 5</div>
+                  </div>
+                  <div>
+                    {renderStars(Math.round(averageRating))}
+                    <div className="text-xs text-gray-500 mt-1">{reviews.length} reviews</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Reviews List */}
+          <div>
+            {reviewsLoading ? (
+              <div className="p-12 text-center">
+                <div className="inline-block w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : reviews.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
+                <Quote className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                <p className="text-sm">No reviews yet. Be the first to share your experience!</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {reviews.map((review, index) => (
+                  <motion.div
+                    key={review._id}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                    className="p-5 hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex gap-3">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        {getUserName(review).charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-gray-900 text-sm">
+                              {getUserName(review)}
+                            </span>
+                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              {formatDate(review.createdAt)}
+                            </span>
+                          </div>
+                          {renderStars(review.rating)}
+                        </div>
+                        <p className="text-sm text-gray-600 leading-relaxed mt-1">
+                          "{review.comment}"
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-700 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-bold mb-4"
-          >
-            Ready to Start Your Journey?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto"
-          >
-            Choose from our premium fleet and experience the best car rental service
-          </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
+            <h2 className="text-2xl font-bold text-white mb-2">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="text-sm text-blue-100 mb-5">
+              Choose from our premium fleet and experience the best car rental service
+            </p>
             <a
               href="/cars"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+              className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all text-sm"
             >
               Browse Cars
-              <Car className="w-5 h-5" />
+              <Car className="w-4 h-4" />
             </a>
           </motion.div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
