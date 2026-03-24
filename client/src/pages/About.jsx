@@ -7,15 +7,24 @@ import api from '../services/api';
 const About = () => {
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch reviews from backend
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        console.log('Fetching from:', api.defaults.baseURL + '/reviews');
+        
+        // ✅ FIX: Remove '/api' since it's already in baseURL
         const response = await api.get('/reviews');
+        
+        console.log('Reviews fetched:', response.data);
         setReviews(response.data.slice(0, 4)); // Show only 4 latest reviews
+        setError(null);
       } catch (error) {
         console.error('Error fetching reviews:', error);
+        console.error('Error response:', error.response?.data);
+        setError(error.response?.data?.message || 'Failed to load reviews');
       } finally {
         setReviewsLoading(false);
       }
@@ -69,13 +78,16 @@ const About = () => {
   // Get user name from user object or ID
   const getUserName = (review) => {
     if (review.user?.name) return review.user.name;
-    if (typeof review.user === 'string') return 'Customer';
+    if (typeof review.user === 'object' && review.user.name) return review.user.name;
+    if (review.userId?.name) return review.userId.name;
     return 'Customer';
   };
 
   // Format date
   const formatDate = (date) => {
+    if (!date) return 'Recently';
     const d = new Date(date);
+    if (isNaN(d.getTime())) return 'Recently';
     return `${d.getMonth() + 1}/${d.getFullYear()}`;
   };
 
@@ -257,6 +269,16 @@ const About = () => {
             {reviewsLoading ? (
               <div className="p-12 text-center">
                 <div className="inline-block w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : error ? (
+              <div className="p-12 text-center">
+                <p className="text-sm text-red-500 mb-2">{error}</p>
+                <button 
+                  onClick={() => window.location.reload()}
+                  className="text-blue-600 text-sm hover:underline"
+                >
+                  Try again
+                </button>
               </div>
             ) : reviews.length === 0 ? (
               <div className="p-12 text-center text-gray-500">
