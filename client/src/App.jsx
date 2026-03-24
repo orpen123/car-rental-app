@@ -15,6 +15,7 @@ import { useAuth } from './context/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
 import NotFound from './pages/NotFound.jsx';
 import BookingSuccess from './pages/BookingSuccess.jsx';
+import About from './pages/About.jsx';
 import ManageReviews from './pages/admin/ManageReviews.jsx';
 
 // Add inside Routes
@@ -49,6 +50,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/cars' element={<Cars />} />
           <Route path='/cars/:id' element={<CarDetail />} />
+          <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />
           <Route
             path='/booking-success'
