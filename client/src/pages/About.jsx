@@ -66,7 +66,7 @@ const About = () => {
           <FaStar
             key={star}
             className={`w-3 h-3 ${
-              star <= rating 
+              star <= rating
                 ? 'text-yellow-400'
                 : 'text-gray-300'
             }`}
@@ -285,7 +285,7 @@ const About = () => {
               ) : error ? (
                 <div className="p-12 text-center">
                   <p className="text-sm text-red-500 mb-2">{error}</p>
-                  <button 
+                  <button
                     onClick={() => window.location.reload()}
                     className="text-gray-800 text-sm hover:underline"
                   >

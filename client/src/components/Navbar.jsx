@@ -12,9 +12,10 @@ import {
   FaStar, 
   FaSignOutAlt, 
   FaChevronDown, 
-  FaBars, 
-  FaTimes 
 } from 'react-icons/fa';
+import { FiX, FiMenu } from 'react-icons/fi';
+
+
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -299,11 +300,17 @@ const Navbar = () => {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label='Toggle menu'
         >
-          {menuOpen ? (
+          {/* {menuOpen ? (
             <FaTimes className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
+            
           ) : (
-            <FaBars className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
-          )}
+            <FaBarsStaggered className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
+          )} */}
+          {menuOpen ? (
+  <FiX className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
+) : (
+  <FiMenu className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
+)}
         </button>
       </div>
 
