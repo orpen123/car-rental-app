@@ -192,11 +192,11 @@ const Footer = () => {
           {/* Column 1: Brand & Socials */}
           <motion.div variants={itemVariants} className='space-y-6'>
             <Link to='/' className='flex items-center gap-2 group'>
-              <div className='w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20 group-hover:rotate-6 transition-transform'>
+              <div className='w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20 group-hover:rotate-6 transition-transform'>
                 C
               </div>
               <span className='text-white font-black text-xl uppercase tracking-tighter'>
-                Car<span className='text-indigo-500'>Rental</span>
+                Car<span className='text-blue-600'>Rental</span>
               </span>
             </Link>
             <p className='text-sm leading-relaxed text-slate-500 max-w-xs'>
