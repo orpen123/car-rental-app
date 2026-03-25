@@ -16,6 +16,7 @@ import { Navigate } from 'react-router-dom';
 import NotFound from './pages/NotFound.jsx';
 import BookingSuccess from './pages/BookingSuccess.jsx';
 import About from './pages/About.jsx';
+import Contact from './pages/Contact.jsx';
 import ManageReviews from './pages/admin/ManageReviews.jsx';
 
 // Add inside Routes
@@ -51,6 +52,7 @@ function App() {
           <Route path='/cars' element={<Cars />} />
           <Route path='/cars/:id' element={<CarDetail />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='*' element={<NotFound />} />
           <Route
             path='/booking-success'

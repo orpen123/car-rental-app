@@ -189,25 +189,34 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className='space-y-5'
+              className='space-y-4 sm:space-y-5 max-w-xl'
             >
-              <span className='inline-block px-4 py-1.5 rounded-full bg-blue-600/10 text-blue-600 text-xs font-semibold tracking-widest uppercase'>
+              {/* Badge */}
+              <span className='inline-block px-3 sm:px-4 py-1 rounded-full bg-blue-600/10 text-blue-600 text-[10px] sm:text-xs font-semibold tracking-widest uppercase'>
                 Our Story
               </span>
-              <h2 className='text-3xl sm:text-4xl font-extrabold text-blue-600 leading-snug'>
+
+              {/* Title */}
+              <h2 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-600 leading-tight sm:leading-snug'>
                 Built to Redefine
-                <br className='hidden sm:block' /> Car Rentals
+                <br className='hidden sm:block' />
+                Car Rentals
               </h2>
+
+              {/* Paragraphs */}
               <p className='text-gray-600 leading-relaxed text-sm sm:text-base'>
-                Founded in 2020, CarRental set out to make luxury and
-                convenience accessible to everyone — ensuring every journey is
-                memorable and hassle-free.
+                Founded in 2020, CarRental was created to bring luxury and
+                convenience together — making every journey smooth, memorable,
+                and accessible.
               </p>
+
               <p className='text-gray-600 leading-relaxed text-sm sm:text-base'>
-                Our mission is top-tier vehicles, transparent pricing, and
-                unparalleled support, making us the preferred choice for
-                travelers and locals alike.
+                We focus on premium vehicles, transparent pricing, and reliable
+                support, becoming a trusted choice for travelers and locals
+                alike.
               </p>
+
+              {/* List */}
               <ul className='space-y-2 pt-2'>
                 {[
                   'Fully insured fleet',
@@ -216,10 +225,10 @@ const About = () => {
                 ].map((item) => (
                   <li
                     key={item}
-                    className='flex items-center gap-2.5 text-sm text-gray-700'
+                    className='flex items-start gap-2.5 text-sm sm:text-base text-gray-700'
                   >
-                    <FaCheckCircle className='text-blue-600 w-4 h-4 flex-shrink-0' />
-                    {item}
+                    <FaCheckCircle className='text-blue-600 w-4 h-4 mt-[2px] flex-shrink-0' />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -231,20 +240,20 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className='relative  md:w-full mx-auto '
+              className='relative  md:space-y-0  sm:w-full mx-auto '
             >
               <div className='absolute inset-0 -m-3 rounded-3xl bg-blue-600/8 rotate-1' />
 
               <img
                 src='https://res.cloudinary.com/dstpycxwd/image/upload/v1774373575/top_dj5hnx.png'
                 alt='Modern car interior'
-                className='rounded-2xl shadow-xl w-full object-cover h-32 md:h-auto md:aspect-[16/9]'
+                className='rounded-2xl shadow-xl w-full object-cover  md:h-auto md:aspect-[16/9]'
               />
 
               <img
                 src='https://res.cloudinary.com/dstpycxwd/image/upload/v1774373582/bot_cwbbuq.png'
                 alt='Modern car interior'
-                className='rounded-2xl shadow-xl w-full object-cover h-32 md:h-auto md:aspect-[16/9]'
+                className='rounded-2xl shadow-xl w-full object-cover  md:h-auto md:aspect-[16/9]'
               />
               {/* floating badge */}
               <div className='absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3 border border-gray-100'>
