@@ -97,9 +97,9 @@ const Dashboard = () => {
             <h1 className='text-3xl font-extrabold text-slate-900 tracking-tight'>Admin Dashboard</h1>
             <p className='text-slate-500 text-sm mt-1'>Real-time overview of your rental business.</p>
           </div>
-          <Link to='/admin/cars' className='flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-2xl transition-all shadow-sm'>
+          {/* <Link to='/admin/cars' className='flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-2xl transition-all shadow-sm'>
             <FaPlus size={12} /> Add New Car
-          </Link>
+          </Link> */}
         </motion.div>
 
         {/* Stat Cards */}
