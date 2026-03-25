@@ -3,18 +3,30 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import DatePicker from 'react-datepicker';
 import {
-  FiArrowLeft, FiCalendar, FiMapPin, FiFileText,
-  FiShield, FiCreditCard, FiAlertTriangle, FiCheck,
-  FiSettings, FiDroplet, FiUsers,
+  FiArrowLeft,
+  FiCalendar,
+  FiMapPin,
+  FiFileText,
+  FiShield,
+  FiCreditCard,
+  FiAlertTriangle,
+  FiCheck,
+  FiSettings,
+  FiDroplet,
+  FiUsers,
 } from 'react-icons/fi';
 import api from '../services/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const StepBadge = ({ number, label, active }) => (
   <div className='flex items-center gap-2 mb-4'>
-    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-      active ? 'bg-blue-600 text-white shadow-sm shadow-blue-200' : 'bg-blue-50 text-blue-600'
-    }`}>
+    <div
+      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+        active
+          ? 'bg-blue-600 text-white shadow-sm shadow-blue-200'
+          : 'bg-blue-50 text-blue-600'
+      }`}
+    >
       {number}
     </div>
     <h3 className='text-sm font-bold text-gray-900'>{label}</h3>
@@ -85,7 +97,7 @@ const Booking = () => {
   }, [id]);
 
   const isDateBooked = (date) => {
-    return bookedDates.some(range => {
+    return bookedDates.some((range) => {
       const start = toMidnight(new Date(range.start));
       const end = toMidnight(new Date(range.end));
       return date >= start && date <= end;
@@ -95,10 +107,10 @@ const Booking = () => {
   const getFirstBookedDateAfter = (date) => {
     if (!date) return null;
     const futureBookings = bookedDates
-      .map(range => toMidnight(new Date(range.start)))
-      .filter(start => start > date)
+      .map((range) => toMidnight(new Date(range.start)))
+      .filter((start) => start > date)
       .sort((a, b) => a - b);
-    
+
     return futureBookings.length > 0 ? futureBookings[0] : null;
   };
 
@@ -110,12 +122,16 @@ const Booking = () => {
   const totalDays = countDays(startDate, endDate);
   const totalPrice = car ? totalDays * car.pricePerDay : 0;
 
-  const formatDate = (date) => date ? toMidnight(date).toISOString().split('T')[0] : '';
+  const formatDate = (date) =>
+    date ? toMidnight(date).toISOString().split('T')[0] : '';
 
   const handleSubmit = async () => {
-    if (!startDate || !endDate) return setDateError('Please select start and end dates');
-    if (totalDays < 1) return setDateError('End date must be at least 1 day after start date');
-    if (!formData.pickupLocation) return setError('Please enter a pickup location');
+    if (!startDate || !endDate)
+      return setDateError('Please select start and end dates');
+    if (totalDays < 1)
+      return setDateError('End date must be at least 1 day after start date');
+    if (!formData.pickupLocation)
+      return setError('Please enter a pickup location');
 
     setSubmitting(true);
     setDateError('');
@@ -133,7 +149,11 @@ const Booking = () => {
       window.location.href = stripeRes.data.url;
     } catch (err) {
       const message = err.response?.data?.message || 'Booking failed';
-      if (message.includes('already booked') || message.includes('dates') || message.includes('available')) {
+      if (
+        message.includes('already booked') ||
+        message.includes('dates') ||
+        message.includes('available')
+      ) {
         setDateError(message);
       } else {
         setError(message);
@@ -142,12 +162,14 @@ const Booking = () => {
     }
   };
 
-  const inputClass = 'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm text-gray-800 outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 focus:bg-white transition-all placeholder-gray-300';
+  const inputClass =
+    'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm text-gray-800 outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 focus:bg-white transition-all placeholder-gray-300';
 
   const fadeUp = {
     hidden: { opacity: 0, y: 18 },
     visible: (i = 0) => ({
-      opacity: 1, y: 0,
+      opacity: 1,
+      y: 0,
       transition: { duration: 0.4, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
     }),
   };
@@ -157,7 +179,9 @@ const Booking = () => {
       <div className='min-h-screen bg-[#f0f2f8] flex items-center justify-center'>
         <div className='flex flex-col items-center gap-4'>
           <div className='w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin' />
-          <p className='text-sm text-gray-400 font-medium'>Loading booking details...</p>
+          <p className='text-sm text-gray-400 font-medium'>
+            Loading booking details...
+          </p>
         </div>
       </div>
     );
@@ -166,9 +190,12 @@ const Booking = () => {
   return (
     <div className='min-h-screen bg-[#f0f2f8] pt-20 pb-12'>
       <div className='max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8'>
-
         {/* Back */}
-        <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.35 }}>
+        <motion.div
+          initial={{ opacity: 0, x: -12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.35 }}
+        >
           <Link
             to={`/cars/${id}`}
             className='inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors mb-6 group font-medium'
@@ -185,29 +212,42 @@ const Booking = () => {
           transition={{ duration: 0.4, delay: 0.05 }}
           className='mb-6'
         >
-          <p className='text-blue-600 uppercase tracking-widest text-[10px] font-bold mb-1'>Reservation</p>
-          <h1 className='text-2xl sm:text-3xl font-extrabold text-gray-900'>Book Your Car</h1>
+          <p className='text-blue-600 uppercase tracking-widest text-[10px] font-bold mb-1'>
+            Reservation
+          </p>
+          <h1 className='text-2xl sm:text-3xl font-extrabold text-gray-900'>
+            Book Your Car
+          </h1>
           {car && (
             <p className='text-sm text-gray-400 mt-1'>
               {car.brand} {car.model} ·{' '}
-              <span className='text-blue-600 font-semibold'>${car.pricePerDay}/day</span>
+              <span className='text-blue-600 font-semibold'>
+                ${car.pricePerDay}/day
+              </span>
             </p>
           )}
         </motion.div>
 
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6'>
-
-          {/* ── Form ──────────────────────────────────────────── */}
-          <div className='lg:col-span-2 space-y-4'>
-
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6'>
+          {/* ── Form ── */}
+          <div className='md:col-span-2 space-y-4'>
             {/* Step 1 — Dates */}
-            <motion.div custom={0} variants={fadeUp} initial='hidden' animate='visible'
-              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'>
-              <StepBadge number={1} label='Select Dates' active={!startDate || !endDate} />
+            <motion.div
+              custom={0}
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'
+            >
+              <StepBadge
+                number={1}
+                label='Select Dates'
+                active={!startDate || !endDate}
+              />
 
               <AnimatePresence mode='wait'>
                 {bookedDates.length > 0 && (!startDate || !endDate) && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, height: 0, marginBottom: 0 }}
                     animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
                     exit={{ opacity: 0, height: 0, marginBottom: 0 }}
@@ -216,19 +256,23 @@ const Booking = () => {
                   >
                     <div className='flex items-center gap-2 text-xs text-red-500 bg-red-50 border border-red-100 px-3 py-2.5 rounded-xl'>
                       <FiAlertTriangle className='w-3.5 h-3.5 shrink-0' />
-                      Highlighted dates are already booked — please choose different dates
+                      Highlighted dates are already booked — please choose
+                      different dates
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className='flex items-center gap-2 mb-4 text-xs text-blue-600 bg-blue-50 border border-blue-100 px-3 py-2.5 rounded-xl'>
-                <FiCalendar className='w-3.5 h-3.5 shrink-0' />
-                Minimum rental period is <strong className='font-bold mx-1'>1 full day</strong> — end date must be at least the day after start date
+              <div className='flex items-start sm:items-center gap-2 mb-4 text-[11px] sm:text-xs text-blue-600 bg-blue-50 border border-blue-100 px-3 py-2.5 rounded-xl leading-relaxed sm:leading-normal'>
+                <FiCalendar className='w-3.5 h-3.5 shrink-0 mt-0.5 sm:mt-0' />
+                <p>
+                  Minimum rental period is{' '}
+                  <strong className='font-bold mx-0.5'>1 full day</strong> — end
+                  date must be at least the day after start date
+                </p>
               </div>
 
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-
                 {/* Start date */}
                 <div>
                   <label className='flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2'>
@@ -250,7 +294,9 @@ const Booking = () => {
                       className={`${inputClass} cursor-pointer`}
                       withPortal
                       filterDate={(date) => !isDateBooked(date)}
-                      dayClassName={(date) => isDateBooked(date) ? 'booked-date' : undefined}
+                      dayClassName={(date) =>
+                        isDateBooked(date) ? 'booked-date' : undefined
+                      }
                     />
                     {startDate && (
                       <FiCheck className='absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 pointer-events-none' />
@@ -271,15 +317,21 @@ const Booking = () => {
                         setEndDate(toMidnight(date));
                         setDateError('');
                       }}
-                      minDate={startDate ? nextDay(startDate) : nextDay(new Date())}
+                      minDate={
+                        startDate ? nextDay(startDate) : nextDay(new Date())
+                      }
                       maxDate={getFirstBookedDateAfter(startDate)}
-                      placeholderText={startDate ? 'Pick end date' : 'Select start date first'}
+                      placeholderText={
+                        startDate ? 'Pick end date' : 'Select start date first'
+                      }
                       disabled={!startDate}
                       dateFormat='dd/MM/yyyy'
                       className={`${inputClass} cursor-pointer ${!startDate ? 'opacity-50 cursor-not-allowed' : ''}`}
                       withPortal
                       filterDate={(date) => !isDateBooked(date)}
-                      dayClassName={(date) => isDateBooked(date) ? 'booked-date' : undefined}
+                      dayClassName={(date) =>
+                        isDateBooked(date) ? 'booked-date' : undefined
+                      }
                     />
                     {endDate && (
                       <FiCheck className='absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 pointer-events-none' />
@@ -321,7 +373,8 @@ const Booking = () => {
                     <div className='flex items-center gap-2 text-blue-600'>
                       <FiCalendar className='w-4 h-4 shrink-0' />
                       <span className='text-xs font-semibold'>
-                        {startDate?.toLocaleDateString('en-GB')} → {endDate?.toLocaleDateString('en-GB')}
+                        {startDate?.toLocaleDateString('en-GB')} →{' '}
+                        {endDate?.toLocaleDateString('en-GB')}
                       </span>
                     </div>
                     <span className='text-sm font-black text-blue-600 bg-blue-100 px-3 py-1 rounded-lg'>
@@ -333,9 +386,18 @@ const Booking = () => {
             </motion.div>
 
             {/* Step 2 — Locations */}
-            <motion.div custom={1} variants={fadeUp} initial='hidden' animate='visible'
-              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'>
-              <StepBadge number={2} label='Pickup & Dropoff' active={!!startDate && !!endDate && !formData.pickupLocation} />
+            <motion.div
+              custom={1}
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'
+            >
+              <StepBadge
+                number={2}
+                label='Pickup & Dropoff'
+                active={!!startDate && !!endDate && !formData.pickupLocation}
+              />
 
               <div className='space-y-4'>
                 <div>
@@ -370,7 +432,9 @@ const Booking = () => {
                   <label className='flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2'>
                     <FiMapPin className='w-3.5 h-3.5 text-gray-400' />
                     Dropoff Location
-                    <span className='text-xs text-gray-300 font-normal normal-case tracking-normal ml-1'>(optional)</span>
+                    <span className='text-xs text-gray-300 font-normal normal-case tracking-normal ml-1'>
+                      (optional)
+                    </span>
                   </label>
                   <input
                     type='text'
@@ -385,14 +449,21 @@ const Booking = () => {
             </motion.div>
 
             {/* Step 3 — Notes */}
-            <motion.div custom={2} variants={fadeUp} initial='hidden' animate='visible'
-              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'>
+            <motion.div
+              custom={2}
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6'
+            >
               <StepBadge number={3} label='Additional Notes' active={false} />
               <div>
                 <label className='flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2'>
                   <FiFileText className='w-3.5 h-3.5' />
                   Notes
-                  <span className='text-xs text-gray-300 font-normal normal-case tracking-normal ml-1'>(optional)</span>
+                  <span className='text-xs text-gray-300 font-normal normal-case tracking-normal ml-1'>
+                    (optional)
+                  </span>
                 </label>
                 <textarea
                   name='notes'
@@ -406,31 +477,46 @@ const Booking = () => {
             </motion.div>
           </div>
 
-          {/* ── Summary sidebar ───────────────────────────────── */}
-          <motion.div custom={3} variants={fadeUp} initial='hidden' animate='visible' className='space-y-4'>
-
-            {/* Car card */}
+          {/* ── Summary sidebar ── */}
+          <motion.div
+            custom={3}
+            variants={fadeUp}
+            initial='hidden'
+            animate='visible'
+            className='space-y-4'
+          >
+            {/* Car card - Logic for responsiveness here */}
             {car && (
-              <div className='bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden'>
-                <div className='relative w-full aspect-video bg-[#eaecf5]'>
+              <div className='bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row md:flex-col'>
+                {/* Image Container */}
+                <div className='relative w-full sm:w-2/5 md:w-full aspect-video sm:aspect-auto md:aspect-video bg-[#eaecf5]'>
                   {car.images?.[0] ? (
-                    <img src={car.images[0]} alt={`${car.brand} ${car.model}`} className='w-full h-full object-cover' />
+                    <img
+                      src={car.images[0]}
+                      alt={`${car.brand} ${car.model}`}
+                      className='w-full h-full object-cover'
+                    />
                   ) : (
                     <div className='w-full h-full flex items-center justify-center'>
-                      <svg className='w-12 h-12 text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1} d='M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z' />
-                      </svg>
+                      <FiSettings className='w-12 h-12 text-gray-300' />
                     </div>
                   )}
                   <div className='absolute top-2.5 right-2.5'>
                     <span className='bg-white/95 backdrop-blur-sm text-blue-600 font-black text-xs px-2.5 py-1 rounded-full shadow-sm border border-gray-100'>
-                      ${car.pricePerDay}<span className='font-normal text-gray-400'>/day</span>
+                      ${car.pricePerDay}
+                      <span className='font-normal text-gray-400'>/day</span>
                     </span>
                   </div>
                 </div>
-                <div className='p-4'>
-                  <h3 className='text-sm font-bold text-gray-900'>{car.brand} {car.model}</h3>
-                  <p className='text-xs text-gray-400 mt-0.5 capitalize'>{car.year} · {car.type}</p>
+
+                {/* Info Container */}
+                <div className='p-4 sm:flex-1 md:flex-none'>
+                  <h3 className='text-sm font-bold text-gray-900'>
+                    {car.brand} {car.model}
+                  </h3>
+                  <p className='text-xs text-gray-400 mt-0.5 capitalize'>
+                    {car.year} · {car.type}
+                  </p>
                   <div className='grid grid-cols-2 gap-y-2 gap-x-3 mt-3 text-xs text-gray-500'>
                     <span className='flex items-center gap-1.5'>
                       <FiSettings className='w-3 h-3 text-gray-400' />
@@ -455,12 +541,16 @@ const Booking = () => {
 
             {/* Price summary */}
             <div className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5'>
-              <h3 className='text-sm font-bold text-gray-900 mb-4'>Price Summary</h3>
+              <h3 className='text-sm font-bold text-gray-900 mb-4'>
+                Price Summary
+              </h3>
 
               <div className='space-y-3'>
                 <div className='flex items-center justify-between text-xs text-gray-500'>
                   <span>${car?.pricePerDay}/day</span>
-                  <span>× {totalDays} day{totalDays !== 1 ? 's' : ''}</span>
+                  <span>
+                    × {totalDays} day{totalDays !== 1 ? 's' : ''}
+                  </span>
                 </div>
                 <div className='flex items-center justify-between text-xs'>
                   <span className='text-gray-500'>Service fee</span>
@@ -481,7 +571,9 @@ const Booking = () => {
               </div>
 
               <motion.button
-                whileHover={!submitting && totalDays >= 1 ? { scale: 1.01 } : {}}
+                whileHover={
+                  !submitting && totalDays >= 1 ? { scale: 1.01 } : {}
+                }
                 whileTap={!submitting && totalDays >= 1 ? { scale: 0.98 } : {}}
                 onClick={handleSubmit}
                 disabled={submitting || totalDays < 1}
@@ -489,9 +581,24 @@ const Booking = () => {
               >
                 {submitting ? (
                   <>
-                    <svg className='w-4 h-4 animate-spin' fill='none' viewBox='0 0 24 24'>
-                      <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4' />
-                      <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8v8z' />
+                    <svg
+                      className='w-4 h-4 animate-spin'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                    >
+                      <circle
+                        className='opacity-25'
+                        cx='12'
+                        cy='12'
+                        r='10'
+                        stroke='currentColor'
+                        strokeWidth='4'
+                      />
+                      <path
+                        className='opacity-75'
+                        fill='currentColor'
+                        d='M4 12a8 8 0 018-8v8z'
+                      />
                     </svg>
                     Processing payment...
                   </>
@@ -521,14 +628,20 @@ const Booking = () => {
             {/* Booking as */}
             {user && (
               <div className='bg-white rounded-2xl border border-gray-100 shadow-sm p-4'>
-                <p className='text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3'>Booking As</p>
+                <p className='text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3'>
+                  Booking As
+                </p>
                 <div className='flex items-center gap-3'>
                   <div className='w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-sm'>
                     {user.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className='min-w-0'>
-                    <p className='text-sm font-bold text-gray-900 truncate'>{user.name}</p>
-                    <p className='text-xs text-gray-400 truncate'>{user.email}</p>
+                    <p className='text-sm font-bold text-gray-900 truncate'>
+                      {user.name}
+                    </p>
+                    <p className='text-xs text-gray-400 truncate'>
+                      {user.email}
+                    </p>
                   </div>
                   <div className='ml-auto'>
                     <span className='flex items-center gap-1 text-[10px] text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-100 font-semibold'>
