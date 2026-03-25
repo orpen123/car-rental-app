@@ -587,7 +587,12 @@ const About = () => {
             >
               <div className="absolute inset-0 -m-3 rounded-3xl bg-blue-600/8 rotate-1" />
               <img
-                src="https://images.unsplash.com/photo-1549399542-747805177964?q=80&w=1932&auto=format&fit=crop"
+                src="https://res.cloudinary.com/dstpycxwd/image/upload/v1774373575/top_dj5hnx.png"
+                alt="Modern car interior"
+                className="relative rounded-2xl shadow-xl w-full h-auto object-cover aspect-video"
+              />
+              <img
+                src="https://res.cloudinary.com/dstpycxwd/image/upload/v1774373582/bot_cwbbuq.png"
                 alt="Modern car interior"
                 className="relative rounded-2xl shadow-xl w-full h-auto object-cover aspect-video"
               />
