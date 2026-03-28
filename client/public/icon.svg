@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="135%" y2="135%">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#0D2E6E"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="190" fill="url(#bgGrad)"/>
+
+  <!-- Thin outer ring -->
+  <circle cx="200" cy="200" r="183" fill="none" stroke="white" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Inner subtle ring -->
+  <circle cx="200" cy="200" r="160" fill="none" stroke="white" stroke-width="1" opacity="0.08"/>
+
+  <!-- Horizontal accent line top -->
+  <rect x="60" y="148" width="280" height="1.5" rx="1" fill="url(#lineGrad)" opacity="0.5"/>
+  <!-- Horizontal accent line bottom -->
+  <rect x="60" y="252" width="280" height="1.5" rx="1" fill="url(#lineGrad)" opacity="0.5"/>
+
+  <!-- C letter -->
+  <text
+    x="118"
+    y="272"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="178"
+    font-weight="700"
+    fill="white"
+    letter-spacing="-4"
+    text-anchor="middle"
+    opacity="1"
+  >C</text>
+
+  <!-- R letter -->
+  <text
+    x="285"
+    y="272"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="178"
+    font-weight="700"
+    fill="white"
+    letter-spacing="-4"
+    text-anchor="middle"
+    opacity="1"
+  >R</text>
+
+  <!-- Small dot separator between letters (blue on white) -->
+  <circle cx="200" cy="200" r="5" fill="white" opacity="0.35"/>
+
+  <!-- Bottom label -->
+  <text
+    x="200"
+    y="338"
+    font-family="'Arial', sans-serif"
+    font-size="18"
+    font-weight="400"
+    fill="white"
+    text-anchor="middle"
+    letter-spacing="8"
+    opacity="0.65"
+  >CAR RENTAL</text>
+
+</svg>
