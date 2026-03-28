@@ -33,10 +33,10 @@ const Login = () => {
     <div className='min-h-screen bg-[#eaecf5] flex items-center justify-center px-4 py-24'>
       <div className='w-full max-w-md'>
 
-        {/* Card */}
+        {}
         <div className='bg-white rounded-3xl shadow-sm p-8 sm:p-10'>
 
-          {/* Header */}
+          {}
           <div className='text-center mb-8'>
             <Link to='/' className='text-gray-900 font-bold text-lg uppercase tracking-wide'>
               CarRental
@@ -49,17 +49,17 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Error */}
+          {}
           {error && (
             <div className='bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 mb-6 text-center'>
               {error}
             </div>
           )}
 
-          {/* Form */}
+          {}
           <div className='space-y-4'>
 
-            {/* Email */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Email
@@ -75,7 +75,7 @@ const Login = () => {
               />
             </div>
 
-            {/* Password */}
+            {}
             <div>
               <div className='flex items-center justify-between mb-1.5'>
                 <label className='block text-xs font-semibold text-gray-600 uppercase tracking-wide'>
@@ -96,7 +96,7 @@ const Login = () => {
               />
             </div>
 
-            {/* Submit */}
+            {}
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -114,14 +114,14 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Divider */}
+          {}
           <div className='flex items-center gap-3 my-6'>
             <div className='flex-1 h-px bg-gray-100' />
             <span className='text-xs text-gray-300'>or continue with</span>
             <div className='flex-1 h-px bg-gray-100' />
           </div>
 
-          {/* Social Buttons */}
+          {}
           <div className='grid grid-cols-2 gap-3'>
             <button className='flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-100 rounded-2xl text-xs text-gray-600 font-medium hover:bg-gray-50 transition-all'>
               <svg className='w-4 h-4' viewBox='0 0 24 24'>
@@ -140,7 +140,7 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Register Link */}
+          {}
           <p className='text-center text-xs text-gray-400 mt-6'>
             Don't have an account?{' '}
             <Link to='/register' className='text-blue-600 font-semibold hover:underline'>

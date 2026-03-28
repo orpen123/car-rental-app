@@ -87,7 +87,7 @@ const Dashboard = () => {
     <div className='min-h-screen bg-[#f8fafc] pt-24 pb-12'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6'>
         
-        {/* Header */}
+        {}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,12 +97,10 @@ const Dashboard = () => {
             <h1 className='text-3xl font-extrabold text-slate-900 tracking-tight'>Admin Dashboard</h1>
             <p className='text-slate-500 text-sm mt-1'>Real-time overview of your rental business.</p>
           </div>
-          {/* <Link to='/admin/cars' className='flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-2xl transition-all shadow-sm'>
-            <FaPlus size={12} /> Add New Car
-          </Link> */}
+          {}
         </motion.div>
 
-        {/* Stat Cards */}
+        {}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8'>
           {statCards.map((card, i) => (
             <motion.div
@@ -124,7 +122,7 @@ const Dashboard = () => {
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           
-          {/* Recent Bookings (Left Side) */}
+          {}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -175,10 +173,10 @@ const Dashboard = () => {
             </div>
           </motion.div>
 
-          {/* Sidebar (Right Side) */}
+          {}
           <div className='space-y-6'>
             
-            {/* Quick Actions */}
+            {}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className='bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8'>
               <h2 className='text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6'>Quick Actions</h2>
               <div className='space-y-3'>
@@ -197,7 +195,7 @@ const Dashboard = () => {
               </div>
             </motion.div>
 
-            {/* Fleet Status */}
+            {}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className='bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8'>
               <h2 className='text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6'>Fleet Utilization</h2>
               <div className='space-y-6'>
@@ -222,7 +220,7 @@ const Dashboard = () => {
               </div>
             </motion.div>
 
-            {/* Stats Overview (Restored Section) */}
+            {}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className='bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8'>
               <h2 className='text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6'>Stats Overview</h2>
               <div className='space-y-4'>

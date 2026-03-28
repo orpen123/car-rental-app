@@ -30,7 +30,7 @@ const reviewSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-// One review per booking
+
 reviewSchema.index({ booking: 1 }, { unique: true });
 
 export default mongoose.model('Review', reviewSchema);

@@ -50,10 +50,10 @@ const Register = () => {
     <div className='min-h-screen bg-[#eaecf5] flex items-center justify-center px-4 py-24'>
       <div className='w-full max-w-md'>
 
-        {/* Card */}
+        {}
         <div className='bg-white rounded-3xl shadow-sm p-8 sm:p-10'>
 
-          {/* Header */}
+          {}
           <div className='text-center mb-8'>
             <Link to='/' className='text-gray-900 font-bold text-lg uppercase tracking-wide'>
               CarRental
@@ -66,17 +66,17 @@ const Register = () => {
             </p>
           </div>
 
-          {/* Error */}
+          {}
           {error && (
             <div className='bg-red-50 border border-red-100 text-red-500 text-xs rounded-2xl px-4 py-3 mb-6 text-center'>
               {error}
             </div>
           )}
 
-          {/* Form */}
+          {}
           <div className='space-y-4'>
 
-            {/* Name */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Full Name
@@ -92,7 +92,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Email */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Email
@@ -108,7 +108,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Phone */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Phone
@@ -123,7 +123,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Password */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Password
@@ -139,7 +139,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Confirm Password */}
+            {}
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide'>
                 Confirm Password
@@ -155,7 +155,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Terms */}
+            {}
             <div className='flex items-start gap-2.5 pt-1'>
               <input
                 type='checkbox'
@@ -171,7 +171,7 @@ const Register = () => {
               </label>
             </div>
 
-            {/* Submit */}
+            {}
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -189,7 +189,7 @@ const Register = () => {
             </button>
           </div>
 
-          {/* Login Link */}
+          {}
           <p className='text-center text-xs text-gray-400 mt-6'>
             Already have an account?{' '}
             <Link to='/login' className='text-blue-600 font-semibold hover:underline'>

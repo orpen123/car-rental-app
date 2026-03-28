@@ -102,9 +102,9 @@ const Navbar = () => {
       ref={navRef}
       className='fixed top-0 left-0 right-0 z-50 bg-white shadow-sm'
     >
-      {/* Main bar */}
+      {}
       <div className='max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between'>
-        {/* Logo */}
+        {}
         <div className='flex items-center gap-6'>
           <Link
             to='/'
@@ -115,7 +115,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Center — Desktop Nav (no icons) */}
+        {}
         <div className='hidden md:flex items-center gap-1 flex-1 justify-center'>
           {navItems.map((item) => (
             <div key={item.key} className='relative'>
@@ -172,7 +172,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Right — Desktop (with icons) */}
+        {}
         <div className='hidden md:flex items-center gap-3 flex-shrink-0'>
           {user ? (
             <div className='relative'>
@@ -199,7 +199,7 @@ const Navbar = () => {
 
               {dropdownOpen === 'profile' && (
                 <div className='absolute top-full right-0 mt-1 bg-white shadow-xl rounded-2xl py-2 w-48 border border-gray-100 z-50 animate-fadeIn'>
-                  {/* User info */}
+                  {}
                   <div className='px-4 py-2 mb-1 border-b border-gray-50'>
                     <p className='text-xs font-bold text-gray-900 truncate'>
                       {user.name}
@@ -294,18 +294,13 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Mobile hamburger - Improved */}
+        {}
         <button
           className='md:hidden flex items-center justify-center w-8 h-8 flex-shrink-0'
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label='Toggle menu'
         >
-          {/* {menuOpen ? (
-            <FaTimes className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
-            
-          ) : (
-            <FaBarsStaggered className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
-          )} */}
+          {}
           {menuOpen ? (
   <FiX className='w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors' />
 ) : (
@@ -314,7 +309,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Overlay */}
+      {}
       <div
         className={`md:hidden fixed inset-x-0 top-[53px] bottom-0 bg-black/40 backdrop-blur-sm transition-all duration-300 z-40 ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -322,7 +317,7 @@ const Navbar = () => {
         onClick={() => setMenuOpen(false)}
       />
 
-      {/* Mobile Menu - Slides down from navbar bottom */}
+      {}
       <div
         className={`md:hidden fixed left-0 right-0 bg-white shadow-xl transition-all duration-300 ease-in-out z-50 ${
           menuOpen 
@@ -331,10 +326,10 @@ const Navbar = () => {
         }`}
         style={{ top: '53px' }}
       >
-        {/* Scrollable Container */}
+        {}
         <div className='max-h-[calc(100vh-53px)] overflow-y-auto overscroll-contain'>
           <div className='px-5 py-5 space-y-1'>
-            {/* User Card */}
+            {}
             {user && (
               <div className='flex items-center gap-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl mb-3'>
                 <div className='w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0'>
@@ -354,7 +349,7 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* Nav Links with Icons */}
+            {}
             {mobileLinks.map((link, i) => {
               const Icon = link.icon;
               return (
@@ -374,7 +369,7 @@ const Navbar = () => {
               );
             })}
 
-            {/* User Links */}
+            {}
             {user && (
               <>
                 <div className='h-px bg-gray-100 my-2' />
@@ -434,7 +429,7 @@ const Navbar = () => {
               </>
             )}
 
-            {/* Bottom */}
+            {}
             <div className='pt-3 mt-1 border-t border-gray-100 space-y-2'>
               {user ? (
                 <button

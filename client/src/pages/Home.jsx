@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// ✅ react-icons — replacing all lucide-react icons
+
 import { FaSearch, FaCar, FaUsers, FaMapMarkerAlt, FaHeadphones, FaCog, FaGasPump, FaUser, FaArrowRight, FaCalendarAlt, FaTh } from 'react-icons/fa';
 
-// ✅ react-icons — specific car type icons
+
 import { FaTruck, FaCarSide, FaBus } from 'react-icons/fa';
 import { PiVanFill } from 'react-icons/pi';
 import { BsFillCarFrontFill } from 'react-icons/bs';
@@ -56,7 +56,7 @@ const Home = () => {
     navigate(`/cars?${params.toString()}`);
   };
 
-  // ✅ Updated typeOptions with proper car-specific icons from react-icons
+  
   const typeOptions = [
     { value: '',            label: 'All Types',    Icon: FaTh },
     { value: 'sedan',       label: 'Sedan',        Icon: BsFillCarFrontFill },
@@ -85,7 +85,7 @@ const Home = () => {
     { value: '200', label: 'Up to $200/day' },
   ];
 
-  // ✅ formatOptionLabel — uses Icon from react-icons (rendered as component)
+  
   const formatOptionLabel = ({ label, Icon }) => (
     <div className="flex items-center gap-2">
       {Icon && <Icon className="w-4 h-4 text-gray-500 flex-shrink-0" />}
@@ -185,8 +185,10 @@ const Home = () => {
         [class*="-MenuList"]::-webkit-scrollbar-thumb:hover { background: #2563eb; }
       `}</style>
 
-      {/* ── Hero ── */}
-      <section className='relative flex flex-col items-center text-center px-4 pt-16 pb-0 bg-gradient-to-b from-slate-100 to-slate-50 overflow-hidden sm:min-h-screen'>
+      {}
+      <section className='relative flex flex-col items-center text-center px-4 pt-16 pb-0 bg-gradient-to-b from-slate-100 to-slate-50 overflow-hidden sm:min-h-screen overflow-x-hidden'>
+
+      {/* <section className='relative flex flex-col items-center text-center px-4 pt-16 pb-0 bg-gradient-to-b from-slate-100 to-slate-50 overflow-hidden sm:min-h-screen'> */}
         <motion.div
           className='absolute inset-0 pointer-events-none overflow-hidden'
           initial={{ opacity: 0 }}
@@ -207,7 +209,7 @@ const Home = () => {
 
         <div className='absolute z-10 inset-0 bg-gradient-to-b from-[#eaecf5] via-[#eaecf5]/70 to-transparent pointer-events-none' />
 
-        {/* Badge */}
+        {}
         <motion.div
           className='relative z-20 mb-4'
           initial={{ opacity: 0, y: -10 }}
@@ -224,7 +226,7 @@ const Home = () => {
           </span>
         </motion.div>
 
-        {/* Title */}
+        {}
         <motion.h1
           className='relative z-20 text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 mb-3 leading-tight tracking-tight max-w-2xl'
           initial={{ opacity: 0, y: -16 }}
@@ -247,7 +249,7 @@ const Home = () => {
           </span>
         </motion.h1>
 
-        {/* Subtitle */}
+        {}
         <motion.p
           className='relative z-20 text-slate-400 text-sm sm:text-base mb-8 max-w-md'
           initial={{ opacity: 0 }}
@@ -257,14 +259,14 @@ const Home = () => {
           Browse, filter, and book the perfect car — all in one place.
         </motion.p>
 
-        {/* ── Search Card ── */}
+        {}
         <motion.div
           className='relative z-30 bg-white rounded-2xl shadow-md w-full max-w-3xl'
           initial={{ opacity: 0, y: 20, scale: 0.97 }}
           animate={{ opacity: heroVisible ? 1 : 0, y: heroVisible ? 0 : 20, scale: heroVisible ? 1 : 0.97 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          {/* Mobile */}
+          {}
           <div className='flex flex-col sm:hidden divide-y divide-gray-100'>
             <div className='flex items-center px-4 py-2.5'>
               <span className='text-xs text-gray-400 w-14 flex-shrink-0'>Type</span>
@@ -322,7 +324,7 @@ const Home = () => {
             </motion.button>
           </div>
 
-          {/* Desktop */}
+          {}
           <div className='hidden sm:flex items-center px-2 py-2'>
             <div className='flex-1'>
               <Select
@@ -371,7 +373,7 @@ const Home = () => {
           </div>
         </motion.div>
 
-        {/* Car Image */}
+        {}
         <motion.div
           className='relative z-0 w-full max-w-xs mx-auto mt-6 sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-3xl sm:mt-0'
           initial={{ opacity: 0, y: 50 }}
@@ -382,13 +384,15 @@ const Home = () => {
             src={carImg}
             alt='Dream Car'
             className='w-full object-contain object-bottom drop-shadow-2xl'
-            animate={{ y: [0, -5, 0] }}
+            // animate={{ y: [0, -5, 0] }}
+            animate={{ y: [0, -3, 0] }}
+
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
       </section>
 
-      {/* ── Stats ── */}
+      {}
       <motion.section
         className='bg-white border-y border-slate-100 py-8 px-4'
         initial={{ opacity: 0, y: 20 }}
@@ -429,7 +433,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      {/* ── Featured Cars ── */}
+      {}
       <section className='py-16 px-4 max-w-6xl mx-auto'>
         <motion.div
           className='flex items-end justify-between mb-8'
@@ -534,7 +538,7 @@ const Home = () => {
         )}
       </section>
 
-      {/* ── How It Works ── */}
+      {}
       <motion.section
         className='py-16 px-4 bg-white border-y border-slate-100'
         initial={{ opacity: 0 }}
@@ -594,7 +598,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      {/* ── CTA ── */}
+      {}
       <motion.section
         className='py-16 px-4'
         initial={{ opacity: 0 }}

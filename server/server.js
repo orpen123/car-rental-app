@@ -15,20 +15,20 @@ import contactRoutes from './src/routes/contactRoutes.js';
 
 const app = express();
 
-// ✅ MUST be first — before express.json()
+
 app.use('/api/payment/webhook', express.raw({ type: 'application/json' }));
 
-// ✅ Then CORS
+
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: false,
 }));
 
-// ✅ Then regular middleware
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+
 app.get('/', (req, res) => res.send('Car Rental API ✅'));
 app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
@@ -41,7 +41,7 @@ app.use('/api/contact', contactRoutes);
 
 
 
-// Error handler
+
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   res.status(status).json({ message: err.message || 'Server Error' });

@@ -5,8 +5,8 @@ import User from '../models/User.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// @desc    Create Stripe checkout session
-// @route   POST /api/payment/create-checkout-session
+
+
 export const createCheckoutSession = async (req, res) => {
   try {
     const { bookingId } = req.body;
@@ -53,8 +53,8 @@ export const createCheckoutSession = async (req, res) => {
   }
 };
 
-// @desc    Stripe webhook handler
-// @route   POST /api/payment/webhook
+
+
 export const webhookHandler = async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
@@ -81,7 +81,7 @@ export const webhookHandler = async (req, res) => {
         { returnDocument: 'after' }
       ).populate('car');
 
-      // Send confirmation email
+      
       const user = await User.findById(booking.user);
       await sendBookingConfirmationEmail({
         name: user.name,

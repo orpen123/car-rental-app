@@ -7,14 +7,25 @@
 /* ===== FONTS ===== */
 * {
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* ===== OVERFLOW FIX ===== */
-html, body, #root {
+/* ===== OVERFLOW & SCROLLBAR FIX ===== */
+html {
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -284,6 +295,10 @@ input, select, textarea {
   align-items: center !important;
   justify-content: center !important;
   padding: 20px !important;
+}
+
+html {
+  overflow-y: scroll; /* always show scrollbar — no flash */
 }
 
 .react-datepicker__portal .react-datepicker {

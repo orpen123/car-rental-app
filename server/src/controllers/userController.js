@@ -1,17 +1,17 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
-// @desc    Update profile
-// @route   PUT /api/users/profile
+
+
 export const updateProfile = async (req, res) => {
   try {
     const { name, phone } = req.body;
 
-    // const user = await User.findByIdAndUpdate(
-    //   req.user._id,
-    //   { name, phone },
-    //   { new: true, runValidators: true }
-    // ).select('-password');
+
+
+
+
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { name, phone },
@@ -24,8 +24,8 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-// @desc    Change password
-// @route   PUT /api/users/password
+
+
 export const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;

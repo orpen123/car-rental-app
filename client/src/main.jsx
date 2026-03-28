@@ -5,7 +5,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 
-// ✅ Scroll to top on every route change
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {

@@ -5,7 +5,7 @@ const NotFound = () => {
     <div className='min-h-screen bg-[#eaecf5] flex items-center justify-center px-4'>
       <div className='text-center'>
 
-        {/* 404 number */}
+        {}
         <div className='relative mb-6'>
           <p className='text-[120px] sm:text-[160px] font-black text-blue-600 leading-none opacity-10'>
             404

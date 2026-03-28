@@ -22,17 +22,17 @@ export const getCarBookedDates = async (req, res) => {
   }
 };
 
-// @desc    Get all cars
-// @route   GET /api/cars
-// @desc    Get all cars with search & filter
-// @route   GET /api/cars
+
+
+
+
 export const getCars = async (req, res) => {
   try {
     const { search, type, brand, fuel, transmission, available } = req.query;
 
     const query = {};
 
-    // Search by brand, model or location
+
     if (search) {
       query.$or = [
         { brand: { $regex: search, $options: 'i' } },
@@ -55,8 +55,8 @@ export const getCars = async (req, res) => {
   }
 };
 
-// @desc    Get single car
-// @route   GET /api/cars/:id
+
+
 export const getCarById = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
@@ -69,8 +69,8 @@ export const getCarById = async (req, res) => {
   }
 };
 
-// @desc    Create car
-// @route   POST /api/cars
+
+
 export const createCar = async (req, res) => {
   try {
     const car = await Car.create(req.body);
@@ -80,18 +80,18 @@ export const createCar = async (req, res) => {
   }
 };
 
-// @desc    Update car
-// @route   PUT /api/cars/:id
+
+
 export const updateCar = async (req, res) => {
   try {
-    // const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
-    //   new: true,
-    //   runValidators: true,
-    // });
+
+
+
+
     const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
-  returnDocument: 'after',
-  runValidators: true,
-});
+      returnDocument: 'after',
+      runValidators: true,
+    });
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
@@ -101,8 +101,8 @@ export const updateCar = async (req, res) => {
   }
 };
 
-// @desc    Delete car
-// @route   DELETE /api/cars/:id
+
+
 export const deleteCar = async (req, res) => {
   try {
     const car = await Car.findByIdAndDelete(req.params.id);

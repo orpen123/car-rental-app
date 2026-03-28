@@ -1,15 +1,15 @@
-// routes/contact.js
+
 import express from 'express';
 import { Resend } from 'resend';
 
 const router = express.Router();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// POST /api/contact
+
 router.post('/', async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
 
-  // Basic validation
+  
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ message: 'Please fill in all required fields.' });
   }
@@ -20,10 +20,10 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    // 1. Notify YOU (the business) about the new message
+    
     await resend.emails.send({
-      from: 'CarRental Contact <onboarding@resend.dev>', // replace with your verified domain
-      to: process.env.CONTACT_RECEIVER_EMAIL,            // your business email in .env
+      from: 'CarRental Contact <onboarding@resend.dev>', 
+      to: process.env.CONTACT_RECEIVER_EMAIL,            
       subject: `[Contact Form] ${subject} — from ${name}`,
       html: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px;background:#f8fafc;border-radius:12px;">
@@ -46,9 +46,9 @@ router.post('/', async (req, res) => {
       `,
     });
 
-    // 2. Send a confirmation email to the user
+    
     await resend.emails.send({
-      from: 'CarRental <onboarding@resend.dev>', // replace with your verified domain
+      from: 'CarRental <onboarding@resend.dev>', 
       to: email,
       subject: 'We received your message — CarRental',
       html: `

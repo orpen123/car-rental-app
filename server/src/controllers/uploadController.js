@@ -1,12 +1,12 @@
 import cloudinary from '../config/cloudinary.js';
 
-// @desc    Upload single image
-// @route   POST /api/upload
+
+
 export const uploadImage = async (req, res) => {
   try {
     console.log('Upload request received');
     console.log('File:', req.file);
-    
+
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }

@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fa';
 import api from '../services/api';
 
-/*  React-Select custom styles */
+
 const selectStyles = () => ({
   control: (base, state) => ({
     ...base,
@@ -77,7 +77,7 @@ const subjectOptions = [
   { value: 'other',   label: '💬  Other'             },
 ];
 
-/* ── Animation variants  */
+
 const heroVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } },
@@ -119,7 +119,7 @@ const successVariants = {
   exit: { opacity: 0, scale: 0.92, y: -10, transition: { duration: 0.3 } },
 };
 
-/* ── Component */
+
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: null, message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -162,7 +162,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-white pt-20 overflow-x-hidden">
 
-      {/* ── Hero  */}
+      {}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-20 md:py-28">
         <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/5" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-white/5" />
@@ -207,7 +207,7 @@ const Contact = () => {
             Send us a message and we'll get back to you promptly.
           </motion.p>
 
-          {/* bouncing arrow */}
+          {}
           <motion.div
             variants={heroItem}
             className="mt-10 flex justify-center"
@@ -225,7 +225,7 @@ const Contact = () => {
         </motion.div>
       </section>
 
-      {/* ── Info Cards  */}
+      {}
       <section className="bg-white py-10 md:py-14">
         <div className="max-w-5xl mx-auto px-5 sm:px-6">
           <motion.div
@@ -263,12 +263,12 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* ── Form Section */}
+      {}
       <section className="bg-slate-50 py-12 md:py-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-5 gap-8 md:gap-10 items-start">
 
-            {/* Side Panel */}
+            {}
             <motion.div
               variants={panelVariants}
               initial="hidden"
@@ -306,7 +306,7 @@ const Contact = () => {
                 ))}
               </motion.ul>
 
-              {/* Promo card — desktop */}
+              {}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +331,7 @@ const Contact = () => {
               </motion.div>
             </motion.div>
 
-            {/* Form Card */}
+            {}
             <motion.div
               variants={formVariants}
               initial="hidden"
@@ -425,7 +425,7 @@ const Contact = () => {
                         </motion.div>
                       </div>
 
-                      {/* Phone + React-Select Topic */}
+                      {}
                       <div className="grid sm:grid-cols-2 gap-4">
                         <motion.div variants={fieldItem} className="space-y-1.5">
                           <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
@@ -456,7 +456,7 @@ const Contact = () => {
                         </motion.div>
                       </div>
 
-                      {/* Message */}
+                      {}
                       <motion.div variants={fieldItem} className="space-y-1.5">
                         <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
                           <FaPaperPlane className="w-3 h-3 text-blue-600" /> Your Message
@@ -470,7 +470,7 @@ const Contact = () => {
                         />
                       </motion.div>
 
-                      {/* Error banner */}
+                      {}
                       <AnimatePresence>
                         {error && (
                           <motion.div
@@ -487,7 +487,7 @@ const Contact = () => {
                         )}
                       </AnimatePresence>
 
-                      {/* Submit button */}
+                      {}
                       <motion.div variants={fieldItem}>
                         <motion.button
                           type="submit"
@@ -524,7 +524,7 @@ const Contact = () => {
             </motion.div>
           </div>
 
-          {/* Mobile promo card */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}

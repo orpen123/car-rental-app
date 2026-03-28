@@ -1,8 +1,8 @@
 import Review from '../models/Review.js';
 import Booking from '../models/Booking.js';
 
-// @desc    Create review
-// @route   POST /api/reviews
+
+
 export const createReview = async (req, res) => {
   try {
     const { bookingId, rating, comment } = req.body;
@@ -43,8 +43,8 @@ export const createReview = async (req, res) => {
   }
 };
 
-// @desc    Get reviews by car
-// @route   GET /api/reviews/car/:carId
+
+
 export const getCarReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ car: req.params.carId })
@@ -61,8 +61,8 @@ export const getCarReviews = async (req, res) => {
   }
 };
 
-// @desc    Delete review (admin)
-// @route   DELETE /api/reviews/:id
+
+
 export const deleteReview = async (req, res) => {
   try {
     const review = await Review.findByIdAndDelete(req.params.id);
@@ -75,8 +75,8 @@ export const deleteReview = async (req, res) => {
   }
 };
 
-// @desc    Check if user can review a booking
-// @route   GET /api/reviews/can-review/:bookingId
+
+
 export const canReview = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.bookingId);

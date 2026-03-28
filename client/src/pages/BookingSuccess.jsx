@@ -33,7 +33,7 @@ const BookingSuccess = () => {
     if (bookingId) fetchBooking();
   }, [bookingId]);
 
-  // Animation Variants
+  
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: { 
@@ -73,7 +73,7 @@ const BookingSuccess = () => {
         animate="visible"
         className='bg-white rounded-[2.5rem] shadow-xl shadow-blue-900/5 p-8 sm:p-12 text-center max-w-lg w-full border border-white'
       >
-        {/* Animated Success Icon */}
+        {}
         <div className='relative w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8'>
           <motion.div 
             initial={{ scale: 0 }}

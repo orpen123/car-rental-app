@@ -107,9 +107,9 @@ const About = () => {
 
   return (
     <div className='min-h-screen bg-white text-gray-900 pt-20 font-sans'>
-      {/* ── Hero ────────────────────────────────────────────────── */}
+      {}
       <section className='relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-slate-50 py-24 md:py-32'>
-        {/* decorative circle */}
+        {}
         <div className='pointer-events-none absolute -top-32 -right-32 w-[420px] h-[420px] rounded-full bg-blue-100/60 blur-3xl' />
         <div className='pointer-events-none absolute bottom-0 left-0 w-64 h-64 rounded-full bg-blue-50 blur-2xl' />
 
@@ -144,7 +144,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Stats ───────────────────────────────────────────────── */}
+      {}
       <section className='bg-white py-14 md:py-20'>
         <div className='max-w-5xl mx-auto px-4 sm:px-6'>
           <motion.div
@@ -179,11 +179,11 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Our Story ───────────────────────────────────────────── */}
+      {}
       <section className='bg-slate-50 py-16 md:py-24'>
         <div className='max-w-5xl mx-auto px-4 sm:px-6'>
           <div className='grid md:grid-cols-2 gap-12 lg:gap-16 items-center'>
-            {/* text */}
+            {}
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -191,19 +191,19 @@ const About = () => {
               transition={{ duration: 0.6 }}
               className='space-y-4 sm:space-y-5 max-w-xl'
             >
-              {/* Badge */}
+              {}
               <span className='inline-block px-3 sm:px-4 py-1 rounded-full bg-blue-600/10 text-blue-600 text-[10px] sm:text-xs font-semibold tracking-widest uppercase'>
                 Our Story
               </span>
 
-              {/* Title */}
+              {}
               <h2 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-600 leading-tight sm:leading-snug'>
                 Built to Redefine
                 <br className='hidden sm:block' />
                 Car Rentals
               </h2>
 
-              {/* Paragraphs */}
+              {}
               <p className='text-gray-600 leading-relaxed text-sm sm:text-base'>
                 Founded in 2020, CarRental was created to bring luxury and
                 convenience together — making every journey smooth, memorable,
@@ -216,7 +216,7 @@ const About = () => {
                 alike.
               </p>
 
-              {/* List */}
+              {}
               <ul className='space-y-2 pt-2'>
                 {[
                   'Fully insured fleet',
@@ -234,7 +234,7 @@ const About = () => {
               </ul>
             </motion.div>
 
-            {/* image */}
+            {}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -255,7 +255,7 @@ const About = () => {
                 alt='Modern car interior'
                 className='rounded-2xl shadow-xl w-full object-cover  md:h-auto md:aspect-[16/9]'
               />
-              {/* floating badge */}
+              {}
               <div className='absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3 border border-gray-100'>
                 <div className='w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center'>
                   <FaCar className='text-white w-4 h-4' />
@@ -270,7 +270,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Values ──────────────────────────────────────────────── */}
+      {}
       <section className='bg-white py-16 md:py-24'>
         <div className='max-w-5xl mx-auto px-4 sm:px-6'>
           <motion.div
@@ -304,7 +304,7 @@ const About = () => {
                   variants={fadeUp}
                   className='group relative p-7 rounded-2xl border border-gray-100 bg-white hover:border-blue-100 hover:shadow-md transition-all duration-300 overflow-hidden'
                 >
-                  {/* subtle corner accent */}
+                  {}
                   <div className='absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
                   <div className='relative'>
                     <div className='mb-4 w-12 h-12 rounded-lg bg-blue-600/10 flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300'>
@@ -324,7 +324,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── Reviews ─────────────────────────────────────────────── */}
+      {}
       <section className='bg-slate-50 py-16 md:py-24'>
         <div className='max-w-5xl mx-auto px-4 sm:px-6'>
           <motion.div
@@ -342,7 +342,7 @@ const About = () => {
             </h2>
           </motion.div>
 
-          {/* Rating summary bar */}
+          {}
           {reviews.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -362,7 +362,7 @@ const About = () => {
             </motion.div>
           )}
 
-          {/* Review cards */}
+          {}
           {reviewsLoading ? (
             <div className='flex justify-center py-16'>
               <div className='w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin' />
@@ -427,9 +427,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── CTA ─────────────────────────────────────────────────── */}
+      {}
       <section className='relative overflow-hidden bg-blue-600 py-20 md:py-28'>
-        {/* decorative shapes */}
+        {}
         <div className='pointer-events-none absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/10' />
         <div className='pointer-events-none absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-white/5' />
 

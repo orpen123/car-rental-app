@@ -190,7 +190,7 @@ const Booking = () => {
   return (
     <div className='min-h-screen bg-[#f0f2f8] pt-20 pb-12'>
       <div className='max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8'>
-        {/* Back */}
+        {}
         <motion.div
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
@@ -205,7 +205,7 @@ const Booking = () => {
           </Link>
         </motion.div>
 
-        {/* Page title */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -229,9 +229,9 @@ const Booking = () => {
         </motion.div>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6'>
-          {/* ── Form ── */}
+          {}
           <div className='md:col-span-2 space-y-4'>
-            {/* Step 1 — Dates */}
+            {}
             <motion.div
               custom={0}
               variants={fadeUp}
@@ -273,7 +273,7 @@ const Booking = () => {
               </div>
 
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                {/* Start date */}
+                {}
                 <div>
                   <label className='flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2'>
                     <FiCalendar className='w-3.5 h-3.5' />
@@ -304,7 +304,7 @@ const Booking = () => {
                   </div>
                 </div>
 
-                {/* End date */}
+                {}
                 <div>
                   <label className='flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2'>
                     <FiCalendar className='w-3.5 h-3.5' />
@@ -346,7 +346,7 @@ const Booking = () => {
                 </div>
               </div>
 
-              {/* Date error */}
+              {}
               <AnimatePresence>
                 {dateError && (
                   <motion.div
@@ -361,7 +361,7 @@ const Booking = () => {
                 )}
               </AnimatePresence>
 
-              {/* Duration summary */}
+              {}
               <AnimatePresence>
                 {totalDays >= 1 && (
                   <motion.div
@@ -448,7 +448,7 @@ const Booking = () => {
               </div>
             </motion.div>
 
-            {/* Step 3 — Notes */}
+            {}
             <motion.div
               custom={2}
               variants={fadeUp}
@@ -477,7 +477,7 @@ const Booking = () => {
             </motion.div>
           </div>
 
-          {/* ── Summary sidebar ── */}
+          {}
           <motion.div
             custom={3}
             variants={fadeUp}
@@ -485,10 +485,10 @@ const Booking = () => {
             animate='visible'
             className='space-y-4'
           >
-            {/* Car card - Logic for responsiveness here */}
+            {}
             {car && (
               <div className='bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row md:flex-col'>
-                {/* Image Container */}
+                {}
                 <div className='relative w-full sm:w-2/5 md:w-full aspect-video sm:aspect-auto md:aspect-video bg-[#eaecf5]'>
                   {car.images?.[0] ? (
                     <img
@@ -509,7 +509,7 @@ const Booking = () => {
                   </div>
                 </div>
 
-                {/* Info Container */}
+                {}
                 <div className='p-4 sm:flex-1 md:flex-none'>
                   <h3 className='text-sm font-bold text-gray-900'>
                     {car.brand} {car.model}
@@ -539,7 +539,7 @@ const Booking = () => {
               </div>
             )}
 
-            {/* Price summary */}
+            {}
             <div className='bg-white rounded-2xl border border-gray-100 shadow-sm p-5'>
               <h3 className='text-sm font-bold text-gray-900 mb-4'>
                 Price Summary
@@ -625,7 +625,7 @@ const Booking = () => {
               </div>
             </div>
 
-            {/* Booking as */}
+            {}
             {user && (
               <div className='bg-white rounded-2xl border border-gray-100 shadow-sm p-4'>
                 <p className='text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3'>
