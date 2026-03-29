@@ -1,46 +1,46 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  FaFacebookF, 
-  FaTwitter, 
-  FaInstagram, 
-  FaChevronRight, 
-  FaMapMarkerAlt, 
-  FaPhoneAlt, 
-  FaEnvelope 
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaChevronRight,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaEnvelope
 } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const containerVariants = {
-  hidden: { opacity: 0 },  // remove y: 20
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, staggerChildren: 0.1 }
-  }
-};
+    hidden: { opacity: 0 },  // remove y: 20
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, staggerChildren: 0.1 }
+    }
+  };
 
   const itemVariants = {
-  hidden: { opacity: 0 },  // remove y: 10
-  visible: { opacity: 1, y: 0 }
-};
+    hidden: { opacity: 0 },  // remove y: 10
+    visible: { opacity: 1, y: 0 }
+  };
 
   return (
-    <motion.footer 
+    <motion.footer
       className='bg-slate-950 text-slate-400 pt-16 border-t border-slate-900'
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
     >
-      {}
+      { }
       <div className='max-w-7xl mx-auto px-4 sm:px-6 pb-12'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12'>
 
-          {}
+          { }
           <motion.div variants={itemVariants} className='space-y-6'>
             <Link to='/' className='flex items-center gap-2 group'>
               <div className='w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20 group-hover:rotate-6 transition-transform'>
@@ -143,9 +143,9 @@ const Footer = () => {
           </p>
           <div className='flex items-center gap-8'>
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((text, i) => (
-              <a 
-                key={i} 
-                href='#' 
+              <a
+                key={i}
+                href='#'
                 className='text-[11px] font-bold uppercase tracking-wider text-slate-600 hover:text-indigo-400 transition-colors'
               >
                 {text}

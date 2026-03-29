@@ -19,9 +19,16 @@ const app = express();
 app.use('/api/payment/webhook', express.raw({ type: 'application/json' }));
 
 
+// app.use(cors({
+//   origin: process.env.CLIENT_URL,
+//   credentials: false,
+// }));
 app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: false,
+  origin: [
+    'https://car4rental.vercel.app',
+    'https://car-rental-app-iota-gold.vercel.app'
+  ],
+  credentials: true
 }));
 
 
