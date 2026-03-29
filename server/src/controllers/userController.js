@@ -43,7 +43,7 @@ export const changePassword = async (req, res) => {
         .json({ message: 'Password must be at least 6 characters' });
     }
 
-    user.password = newPassword;
+    user.password = newPassword; 
     await user.save();
 
     res.status(200).json({ message: 'Password updated successfully' });
