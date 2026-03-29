@@ -43,9 +43,8 @@ export const changePassword = async (req, res) => {
         .json({ message: 'Password must be at least 6 characters' });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
-    await user.save({ validateBeforeSave: false });
+    user.password = newPassword;
+    await user.save();
 
     res.status(200).json({ message: 'Password updated successfully' });
   } catch (error) {
