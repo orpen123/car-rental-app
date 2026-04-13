@@ -251,7 +251,7 @@ const About = () => {
               />
 
               <img
-                src='https://res.cloudinary.com/dstpycxwd/image/upload/v1774373582/bot_cwbbuq.png'
+                src='https://res.cloudinary.com/dstpycxwd/image/upload/v1776110128/073ab3ac-f708-4ede-acda-73a97182b1b8.png'
                 alt='Modern car interior'
                 className='rounded-2xl shadow-xl w-full object-cover  md:h-auto md:aspect-[16/9]'
               />
